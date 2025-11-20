@@ -1,6 +1,6 @@
 class CreateProjects < ActiveRecord::Migration[8.1]
   def change
-    create_table :projects do |t|
+    create_table :projects, id: :string do |t|
       t.string :name
       t.string :description
       t.references :user, null: false, foreign_key: true
