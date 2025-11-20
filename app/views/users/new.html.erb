@@ -1,8 +1,31 @@
-<%= form_with url: users_path, scope: :user, method: :post do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, placeholder: "Enter your password", maxlength: 72 %><br>
-  <%= form.submit "Sign up" %>
-<% end %>
-<br>
+<div class="flex flex-col">
+    <%= form_with url: users_path, scope: :user, method: :post, class: "justify-center" do |form| %>
+        <div class="flex flex-col">
+            <%= form.label "Email" %>
+            <%= form.email_field :email_address,
+              required: true,
+              autofocus: true,
+              autocomplete: "username",
+              placeholder: "Enter your email address",
+              value: params[:email_address],
+              class: "border rounded-md px-4 py-2 bg-white text-black" %><br>
+        </div>
 
-<%= link_to "Forgot password?", new_password_path %>
+        <div class="flex flex-col">
+            <%= form.label "Mot de passe" %>
+        <%= form.password_field :password,
+          required: true,
+          placeholder: "Enter your password",
+          maxlength: 72,
+          class: "border rounded-md px-4 py-2 bg-white text-black" %><br>
+        </div>
+
+        <div class="flex justify-between">
+            <%= form.submit "Sign up", class: "border rounded-md px-4 py-2 bg-primary text-black" %>
+            <%= link_to "Sign in", new_session_path, class: "border rounded-md px-4 py-2 bg-secondary text-black" %>
+        </div>
+    <% end %>
+    <br>
+
+    <%= link_to "Forgot password?", new_password_path %>
+</div>
