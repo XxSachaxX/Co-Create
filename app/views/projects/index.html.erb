@@ -1,1 +1,7 @@
-Hello World
+<% @projects.each do |project| %>
+  <div>
+    <h2>Créé par: <%= project.user.email_address %></h2>
+    <h2>Nom du projet: <%= project.name %></h2>
+    <p>Description: <%= project.description %></p>
+  </div>
+<% end %>
