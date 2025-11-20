@@ -1,11 +1,5 @@
 class Session < ApplicationRecord
-  before_create :set_uuid
+  include Uuidable
 
   belongs_to :user
-
-  private
-
-  def set_uuid
-    self.id ||= SecureRandom.uuid
-  end
 end
