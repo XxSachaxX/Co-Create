@@ -1,9 +1,29 @@
-<%= form_with model: [@user, @project], local: true, class: "flex flex-col" do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name, class: "border rounded-md px-4 py-2 bg-white text-black" %>
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+  <div class="bg-white rounded-lg shadow-md border border-gray-200 p-8">
+    <h1 class="text-2xl font-bold mb-6">Create a new project</h1>
 
-  <%= form.label :description %>
-  <%= form.text_area :description, class: "border rounded-md px-4 py-2 bg-white text-black" %>
+    <%= form_with model: [@user, @project], local: true, class: "flex flex-col gap-4" do |form| %>
+      <div class="flex flex-col gap-2">
+        <%= form.label :name, "Project name", class: "text-sm font-medium text-gray-700" %>
+        <%= form.text_field :name,
+          required: true,
+          placeholder: "Enter project name",
+          class: "border border-gray-300 rounded-md px-4 py-2 bg-white text-black focus:ring-2 focus:ring-primary focus:border-transparent" %>
+      </div>
 
-  <%= form.submit "Create Project", class: "border rounded-md px-4 py-2 bg-primary text-black" %>
-<% end %>
+      <div class="flex flex-col gap-2">
+        <%= form.label :description, "Description", class: "text-sm font-medium text-gray-700" %>
+        <%= form.text_area :description,
+          rows: 4,
+          placeholder: "Describe your project",
+          class: "border border-gray-300 rounded-md px-4 py-2 bg-white text-black focus:ring-2 focus:ring-primary focus:border-transparent resize-none" %>
+      </div>
+
+      <div class="flex gap-4 mt-2">
+        <%= form.submit "Create Project",
+          class: "border rounded-md px-6 py-2 bg-primary text-black font-medium hover:opacity-90 transition cursor-pointer" %>
+        <%= link_to "Cancel", projects_path, class: "border border-gray-300 rounded-md px-6 py-2 text-gray-700 hover:bg-gray-50 transition" %>
+      </div>
+    <% end %>
+  </div>
+</div>

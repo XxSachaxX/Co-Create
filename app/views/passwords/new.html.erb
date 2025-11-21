@@ -1,8 +1,31 @@
-<h1>Forgot your password?</h1>
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="bg-white rounded-lg shadow-md border border-gray-200 p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Forgot your password?</h1>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+    <% if flash[:alert] %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.submit "Email reset instructions" %>
-<% end %>
+    <%= form_with url: passwords_path, class: "flex flex-col gap-4" do |form| %>
+      <div class="flex flex-col gap-2">
+        <%= form.label :email_address, "Email", class: "text-sm font-medium text-gray-700" %>
+        <%= form.email_field :email_address,
+          required: true,
+          autofocus: true,
+          autocomplete: "username",
+          placeholder: "Enter your email address",
+          value: params[:email_address],
+          class: "border border-gray-300 rounded-md px-4 py-2 bg-white text-black focus:ring-2 focus:ring-primary focus:border-transparent" %>
+      </div>
+
+      <%= form.submit "Email reset instructions",
+        class: "w-full border rounded-md px-4 py-2 bg-primary text-black font-medium hover:opacity-90 transition cursor-pointer" %>
+    <% end %>
+
+    <div class="mt-6 text-center">
+      <%= link_to "Back to sign in", new_session_path, class: "text-sm text-gray-600 hover:text-gray-900" %>
+    </div>
+  </div>
+</div>
