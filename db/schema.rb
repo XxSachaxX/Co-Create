@@ -16,7 +16,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_152000) do
     t.string "description"
     t.string "name"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.string "user_id", null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
