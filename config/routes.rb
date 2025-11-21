@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   root "projects#index"
   get "/" => "sessions#new", as: :home
   resource :session
-  resources :users, only: [:new, :create]
+  resources :users, only: [ :new, :create ] do
+    resources :projects, only: [ :new, :create, :edit, :update, :destroy ]
+  end
+  resources :projects, except: [:new, :create, :edit, :update, :destroy]
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
