@@ -1,0 +1,9 @@
+<%= form_with model: [@user, @project], local: true, class: "flex flex-col" do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name, class: "border rounded-md px-4 py-2 bg-white text-black" %>
+
+  <%= form.label :description %>
+  <%= form.text_area :description, class: "border rounded-md px-4 py-2 bg-white text-black" %>
+
+  <%= form.submit "Create Project", class: "border rounded-md px-4 py-2 bg-primary text-black" %>
+<% end %>

@@ -2,6 +2,31 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
+    @user = current_user
     render :index
+  end
+
+  def new
+    @user = current_user
+    @project = Project.new
+  end
+
+  def create
+    @project = current_user.projects.new(project_params)
+    if @project.save
+      redirect_to root_path, notice: 'Project was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:name, :description)
+  end
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
   end
 end

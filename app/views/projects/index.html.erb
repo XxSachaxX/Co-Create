@@ -1,3 +1,7 @@
+<% if authenticated? %>
+    <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "border rounded-md px-4 py-2 bg-primary text-black" %>
+<% end %>
+
 <% @projects.each do |project| %>
   <div>
     <h2>Créé par: <%= project.user.email_address %></h2>
