@@ -20,6 +20,12 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show
+    @project = Project.find(params[:id])
+    @user = current_user
+    render :show
+  end
+
   private
 
   def project_params
