@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-2xl font-bold text-charcoal">Projects</h1>
     <% if authenticated? %>
-      <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "rounded-md px-4 py-2 bg-lavender text-white font-medium hover:bg-lavender-500 transition" %>
+      <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "rounded-lg px-6 py-3 text-lg bg-lavender text-white font-semibold hover:bg-lavender-500 transition animate-subtle-pulse" %>
     <% end %>
   </div>
 
