@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resource :session
   resources :users, only: [ :new, :create ] do
     resources :projects, only: [ :new, :create, :edit, :update, :destroy ]
+    get 'projects(/:user_id)', to: 'projects#user_projects', as: :user_projects
   end
   resources :projects, except: [:new, :create, :edit, :update, :destroy]
   resources :passwords, param: :token

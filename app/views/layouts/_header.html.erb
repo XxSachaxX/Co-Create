@@ -16,7 +16,8 @@
       <!-- Navigation -->
       <div class="flex items-center gap-3">
         <% if authenticated? %>
-          <%= link_to "Projects", projects_path, class: "text-sm font-medium text-charcoal-500 hover:text-lavender-700 px-3 py-2 rounded-lg hover:bg-lavender-50 transition-all duration-200" %>
+          <%= link_to "Find a project", projects_path, class: "text-sm font-medium text-charcoal-500 hover:text-lavender-700 px-3 py-2 rounded-lg hover:bg-lavender-50 transition-all duration-200" %>
+          <%= link_to "Your projects", user_projects_path(@user), class: "text-sm font-medium text-charcoal-500 hover:text-lavender-700 px-3 py-2 rounded-lg hover:bg-lavender-50 transition-all duration-200" %>
           <%= button_to "Log out", session_path, method: :delete, class: "text-sm font-medium text-charcoal-500 hover:text-red-600 px-3 py-2 rounded-lg hover:bg-red-50 transition-all duration-200" %>
         <% else %>
           <%= link_to "Sign in", new_session_path, class: "text-sm font-medium text-charcoal-500 hover:text-lavender-700 px-3 py-2 rounded-lg hover:bg-lavender-50 transition-all duration-200" %>
