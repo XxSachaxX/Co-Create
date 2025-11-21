@@ -1,9 +1,19 @@
 <div class="container mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-2xl font-bold text-charcoal">Projects</h1>
-    <% if authenticated? %>
-      <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "rounded-lg px-6 py-3 text-lg bg-lavender text-white font-semibold hover:bg-lavender-500 transition animate-subtle-pulse" %>
-    <% end %>
+  <!-- Modern Banner -->
+  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-lavender via-lavender-400 to-mustard mb-8 p-8 shadow-lg">
+    <div class="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+    <div class="relative flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-white mb-2">Projects</h1>
+        <p class="text-white/80 text-sm">We can create anything together</p>
+      </div>
+      <% if authenticated? %>
+        <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "rounded-lg px-6 py-3 text-lg bg-white text-lavender font-semibold hover:bg-white/90 hover:shadow-md transition-all duration-200" %>
+      <% end %>
+    </div>
+    <!-- Decorative elements -->
+    <div class="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-mustard/20 rounded-full blur-2xl"></div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
