@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :project do
-    name { "MyString" }
-    description { "MyString" }
-    user { nil }
+    name { Faker::Lorem.word }
+    description { "A very long description that exceeds the maximum length" }
+    user { user }
   end
 end
