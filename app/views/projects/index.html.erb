@@ -1,25 +1,25 @@
 <div class="container mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-8">
-    <h1 class="text-2xl font-bold">Projects</h1>
+    <h1 class="text-2xl font-bold text-charcoal">Projects</h1>
     <% if authenticated? %>
-      <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "border rounded-md px-4 py-2 bg-primary text-black hover:opacity-90 transition" %>
+      <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "rounded-md px-4 py-2 bg-lavender text-white font-medium hover:bg-lavender-500 transition" %>
     <% end %>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @projects.each do |project| %>
-      <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition">
-        <h2 class="text-lg font-semibold mb-2 truncate"><%= project.name %></h2>
-        <p class="text-gray-600 text-sm mb-4 line-clamp-3"><%= project.description %></p>
-        <div class="text-xs text-gray-400">
-          Created by <%= project.user.email_address %>
+      <div class="bg-white rounded-lg shadow-md border border-charcoal-200 p-6 hover:shadow-lg hover:border-lavender-300 transition">
+        <h2 class="text-lg font-semibold mb-2 truncate text-charcoal"><%= project.name %></h2>
+        <p class="text-charcoal-500 text-sm mb-4 line-clamp-3"><%= project.description %></p>
+        <div class="text-xs text-charcoal-400">
+          Created by <%= project.user.name %>
         </div>
       </div>
     <% end %>
   </div>
 
   <% if @projects.empty? %>
-    <div class="text-center py-12 text-gray-500">
+    <div class="text-center py-12 text-charcoal-400">
       No projects yet. Create your first project!
     </div>
   <% end %>
