@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
 
   def user_projects
     @user = User.find(params[:user_id])
+    authorize @user, :user_projects?
     @projects = @user.projects
     render :user_projects
   end
