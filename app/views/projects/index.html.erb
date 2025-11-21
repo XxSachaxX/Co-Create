@@ -1,19 +1,60 @@
 <div class="container mx-auto px-4 py-8">
-  <!-- Modern Banner -->
-  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-lavender via-lavender-400 to-mustard mb-8 p-8 shadow-lg">
-    <div class="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-    <div class="relative flex justify-between items-center">
-      <div>
-        <h1 class="text-3xl font-bold text-white mb-2">Projects</h1>
-        <p class="text-white/80 text-sm">We can create anything together</p>
-      </div>
-      <% if authenticated? %>
-        <%= link_to "Create a project", new_user_project_path(user_id: @user.id), class: "rounded-lg px-6 py-3 text-lg bg-white text-lavender font-semibold hover:bg-white/90 hover:shadow-md transition-all duration-200" %>
-      <% end %>
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden rounded-2xl bg-charcoal-900 mb-8 p-12 md:p-16 shadow-2xl">
+    <!-- Animated gradient background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-lavender-900/90 via-charcoal-900 to-mustard-900/80"></div>
+
+    <!-- Mesh gradient overlays -->
+    <div class="absolute top-0 left-0 w-full h-full">
+      <div class="absolute top-1/4 -left-20 w-96 h-96 bg-lavender-500/30 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-mustard-400/25 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-lavender-400/20 rounded-full blur-2xl"></div>
     </div>
-    <!-- Decorative elements -->
-    <div class="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-mustard/20 rounded-full blur-2xl"></div>
+
+    <!-- Geometric shapes -->
+    <div class="absolute top-8 right-12 w-20 h-20 border-2 border-white/10 rotate-45"></div>
+    <div class="absolute bottom-12 left-16 w-12 h-12 border-2 border-mustard/20 rotate-12"></div>
+    <div class="absolute top-1/2 right-1/4 w-6 h-6 bg-lavender-400/40 rotate-45"></div>
+
+    <!-- Grid pattern overlay -->
+    <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+    <div class="relative z-10">
+      <div class="max-w-2xl">
+        <!-- Eyebrow text -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg mb-6 border border-white/10">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          <span class="text-white/90 text-sm font-medium tracking-wide"><%= @projects.count %> active projects</span>
+        </div>
+
+        <!-- Main heading -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+          Build something
+          <span class="bg-gradient-to-r from-lavender-300 via-lavender to-mustard bg-clip-text text-transparent">incredible</span>
+          together
+        </h1>
+
+        <!-- Subheading -->
+        <p class="text-lg md:text-xl text-white/70 mb-8 leading-relaxed max-w-xl">
+          Collaborate on projects that matter. Join creators and makers shaping the future.
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="flex flex-wrap gap-4">
+          <% if authenticated? %>
+            <%= link_to new_user_project_path(user_id: @user.id), class: "group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-lavender to-lavender-600 text-white font-semibold rounded-lg hover:from-lavender-600 hover:to-lavender-700 hover:shadow-lg hover:shadow-lavender/25 transition-all duration-300" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              Create a project
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
