@@ -77,7 +77,7 @@ asset_path: /rails/public/assets
 builder:
   arch: amd64
 
-remote: ssh://root@46.62.193.32
+  remote: ssh://root@46.62.193.32
 
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
   # remote: ssh://docker@docker-builder-server
@@ -94,7 +94,10 @@ remote: ssh://root@46.62.193.32
 #   user: app
 
 # Use accessory services (secrets come from .kamal/secrets).
-# accessories:
+accessories:
+  traefik:
+      image: traefik:v2.10 # Utilisez la version de Traefik recommandée par Kamal
+      host: co-create.quest
 #   db:
 #     image: mysql:8.0
 #     host: 192.168.0.2
