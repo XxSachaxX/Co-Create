@@ -20,9 +20,9 @@ servers:
 #
 # Don't use this when deploying to multiple web servers (then you have to terminate SSL at your load balancer).
 #
-#proxy:
-  #ssl: true
-  #host: co-create.quest
+proxy:
+  ssl: true
+  host: co-create.quest
 
 # Where you keep your container images.
 registry:
@@ -94,10 +94,7 @@ builder:
 #   user: app
 
 # Use accessory services (secrets come from .kamal/secrets).
-accessories:
-  traefik:
-      image: traefik:v2.10 # Utilisez la version de Traefik recommandée par Kamal
-      host: co-create.quest
+# accessories:
 #   db:
 #     image: mysql:8.0
 #     host: 192.168.0.2
