@@ -12,8 +12,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = current_user.projects.new(project_params)
-    if @project.save
+    if current_user.projects.create!(project_params)
       redirect_to root_path, notice: 'Project was successfully created.'
     else
       render :new
