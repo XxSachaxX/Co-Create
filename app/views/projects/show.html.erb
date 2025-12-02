@@ -84,6 +84,10 @@
             <span class="text-xs text-charcoal-400 uppercase tracking-wide">Last updated</span>
             <p class="text-sm text-charcoal-600 mt-1"><%= @project.updated_at.strftime("%B %d, %Y") %></p>
           </div>
+
+          <% if @project.owner == @user %>
+            <%= link_to "Supprimer", user_project_path(@user, @project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+          <% end %>
         </div>
       </div>
     </div>

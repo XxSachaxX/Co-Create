@@ -11,4 +11,8 @@ class Project < ApplicationRecord
   def owner
     project_memberships.find_by(role: "owner").user
   end
+
+  def owner?(user)
+    owner == user
+  end
 end
