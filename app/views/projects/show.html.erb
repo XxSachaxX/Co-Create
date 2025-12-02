@@ -19,9 +19,9 @@
           <div class="flex items-center gap-3">
             <div class="flex items-center gap-2">
               <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <span class="text-white text-sm font-medium"><%= @project.user.name.first.upcase %></span>
+                <span class="text-white text-sm font-medium"><%= @project.owner.name.first.upcase %></span>
               </div>
-              <span class="text-white/80 text-sm">Created by <%= @project.user.name %></span>
+              <span class="text-white/80 text-sm">Created by <%= @project.owner.name %></span>
             </div>
             <span class="inline-flex items-center gap-1 px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full">
               <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
@@ -69,9 +69,9 @@
             <span class="text-xs text-charcoal-400 uppercase tracking-wide">Owner</span>
             <div class="flex items-center gap-2 mt-1">
               <div class="w-6 h-6 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
-                <span class="text-white text-xs font-medium"><%= @project.user.name.first.upcase %></span>
+                <span class="text-white text-xs font-medium"><%= @project.owner.name.first.upcase %></span>
               </div>
-              <span class="text-sm text-charcoal-600"><%= @project.user.name %></span>
+              <span class="text-sm text-charcoal-600"><%= @project.owner.name %></span>
             </div>
           </div>
 

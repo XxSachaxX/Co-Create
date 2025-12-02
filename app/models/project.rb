@@ -7,4 +7,8 @@ class Project < ApplicationRecord
 
   validates :description, presence: true, length: { minimum: 50 }
   validates :name, presence: true, length: { minimum: 1 }
+
+  def owner
+    project_memberships.find_by(role: "owner").user
+  end
 end
