@@ -7,7 +7,6 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def destroy?
-    membership = project.project_memberships.find_by(user: user)
-    membership&.role == 'owner'
+    project.owner?(user)
   end
 end
