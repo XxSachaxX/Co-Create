@@ -87,6 +87,7 @@
 
           <% if @project.owner == @user %>
             <%= link_to "Supprimer", user_project_path(@user, @project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+            <%= link_to "Editer", edit_user_project_path(@user, @project) %>
           <% end %>
         </div>
       </div>

@@ -9,4 +9,12 @@ class ProjectPolicy < ApplicationPolicy
   def destroy?
     project.owner?(user)
   end
+
+  def edit?
+    project.owner?(user)
+  end
+
+  def update?
+    project.owner?(user)
+  end
 end

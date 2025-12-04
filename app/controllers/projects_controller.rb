@@ -33,6 +33,23 @@ class ProjectsController < ApplicationController
     render :show
   end
 
+  def edit
+    @user = current_user
+    @project = Project.find(params[:id])
+    authorize @project
+    render :edit
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    authorize @project
+    if @project.update(project_params)
+      redirect_to project_path(@project), notice: 'Project was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   def user_projects
     @user = User.find(params[:user_id])
     authorize @user, :user_projects?
