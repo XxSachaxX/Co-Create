@@ -4,9 +4,13 @@ Rails.application.routes.draw do
   resource :session
   resources :users, only: [ :new, :create ] do
     resources :projects, only: [ :new, :create, :edit, :update, :destroy ]
-    get 'projects(/:user_id)', to: 'projects#user_projects', as: :user_projects
+    get "projects(/:user_id)", to: "projects#user_projects", as: :user_projects
   end
-  resources :projects, except: [:new, :create, :edit, :update, :destroy]
+  resources :projects, except: [:new, :create, :edit, :update, :destroy] do
+    member do
+      get :join, to: "projects#join"
+    end
+  end
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

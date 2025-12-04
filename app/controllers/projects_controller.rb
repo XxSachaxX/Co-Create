@@ -57,6 +57,13 @@ class ProjectsController < ApplicationController
     render :user_projects
   end
 
+  def join
+    @project = Project.find(params[:id])
+
+    @project.project_memberships.create(user: current_user, role: "member")
+    redirect_to project_path(@project), notice: 'You have joined the project.'
+  end
+
   private
 
   def project_params
