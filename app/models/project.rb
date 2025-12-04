@@ -15,4 +15,8 @@ class Project < ApplicationRecord
   def owner?(user)
     owner == user
   end
+
+  def collaborator?(user)
+    users.include?(user) && !owner?(user)
+  end
 end
