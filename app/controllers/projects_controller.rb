@@ -21,30 +21,27 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    project = Project.find(params[:id])
-    authorize project
-    project.destroy!
+    authorize current_project
+    current_project.destroy!
     redirect_to projects_path, notice: "Project was successfully deleted."
   end
 
   def show
-    @project = Project.find(params[:id])
+    @project = current_project
     @user = current_user
     render :show
   end
 
   def edit
     @user = current_user
-    @project = Project.find(params[:id])
-    authorize @project
+    authorize current_project
     render :edit
   end
 
   def update
-    @project = Project.find(params[:id])
-    authorize @project
-    if @project.update(project_params)
-      redirect_to project_path(@project), notice: "Project was successfully updated."
+    authorize current_project
+    if current_project.update(project_params)
+      redirect_to project_path(current_project), notice: "Project was successfully updated."
     else
       render :edit
     end
@@ -58,24 +55,25 @@ class ProjectsController < ApplicationController
   end
 
   def join
-    @project = Project.find(params[:id])
-
-    @project.project_memberships.create(user: current_user, role: "member")
-    redirect_to project_path(@project), notice: "You have joined the project."
+    current_project.project_memberships.create(user: current_user, role: "member")
+    redirect_to project_path(current_project), notice: "You have joined the project."
   end
 
   def leave
-    @project = Project.find(params[:id])
-    return unless @project.collaborator?(current_user)
+    return unless current_project.collaborator?(current_user)
 
-    @project.project_memberships.find_by(user: current_user).destroy!
-    redirect_to project_path(@project), notice: "You have left the project."
+    current_project.project_memberships.find_by(user: current_user).destroy!
+    redirect_to project_path(current_project), notice: "You have left the project."
   end
 
   private
 
   def project_params
     params.require(:project).permit(:name, :description)
+  end
+
+  def current_project
+    @current_project ||= Project.find(params[:id]) if params[:id]
   end
 
   def current_user
