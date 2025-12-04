@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
   def create
     project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: "owner", user: current_user])
     if project.save!
-      redirect_to project_path(project), notice: 'Project was successfully created.'
+      redirect_to project_path(project), notice: "Project was successfully created."
     else
       render :new
     end
@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
     project = Project.find(params[:id])
     authorize project
     project.destroy!
-    redirect_to projects_path, notice: 'Project was successfully deleted.'
+    redirect_to projects_path, notice: "Project was successfully deleted."
   end
 
   def show
@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     authorize @project
     if @project.update(project_params)
-      redirect_to project_path(@project), notice: 'Project was successfully updated.'
+      redirect_to project_path(@project), notice: "Project was successfully updated."
     else
       render :edit
     end
@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     @project.project_memberships.create(user: current_user, role: "member")
-    redirect_to project_path(@project), notice: 'You have joined the project.'
+    redirect_to project_path(@project), notice: "You have joined the project."
   end
 
   private
