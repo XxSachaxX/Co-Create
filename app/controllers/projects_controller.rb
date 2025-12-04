@@ -64,6 +64,14 @@ class ProjectsController < ApplicationController
     redirect_to project_path(@project), notice: "You have joined the project."
   end
 
+  def leave
+    @project = Project.find(params[:id])
+    return unless @project.collaborator?(current_user)
+
+    @project.project_memberships.find_by(user: current_user).destroy!
+    redirect_to project_path(@project), notice: "You have left the project."
+  end
+
   private
 
   def project_params

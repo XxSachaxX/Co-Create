@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   end
   resources :projects, except: [:new, :create, :edit, :update, :destroy] do
     member do
-      get :join, to: "projects#join"
+      post :join, to: "projects#join"
+      get :leave, to: "projects#leave"
     end
   end
   resources :passwords, param: :token
