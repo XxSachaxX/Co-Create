@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
     project = Project.find(params[:id])
     authorize project
     project.destroy!
+    redirect_to projects_path, notice: 'Project was successfully deleted.'
   end
 
   def show
