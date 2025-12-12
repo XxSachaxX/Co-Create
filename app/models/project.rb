@@ -19,4 +19,8 @@ class Project < ApplicationRecord
   def collaborator?(user)
     users.include?(user) && !owner?(user)
   end
+
+  def requested_membership?(user)
+    project_memberships.find_by(user: user, role: "member", status: "pending").present?
+  end
 end
