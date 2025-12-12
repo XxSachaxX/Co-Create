@@ -21,6 +21,6 @@ class Project < ApplicationRecord
   end
 
   def requested_membership?(user)
-    project_memberships.find_by(user: user, role: "member", status: "pending").present?
+    project_memberships.find_by(user: user, role: "member", status: ProjectMembership::PENDING).present?
   end
 end
