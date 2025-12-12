@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_12_150556) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_12_150932) do
   create_table "project_memberships", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "project_id"
     t.string "role", default: "member", null: false
+    t.string "status", default: "pending"
     t.datetime "updated_at", null: false
     t.string "user_id"
     t.index ["project_id"], name: "index_project_memberships_on_project_id"
