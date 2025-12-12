@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :projects, only: [ :new, :create, :edit, :update, :destroy ]
     get "projects(/:user_id)", to: "projects#user_projects", as: :user_projects
   end
-  resources :projects, except: [:new, :create, :edit, :update, :destroy] do
+  resources :projects, except: [ :new, :create, :edit, :update, :destroy ] do
     member do
       post :join, to: "projects#join"
       post :leave, to: "projects#leave"

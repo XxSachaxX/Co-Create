@@ -88,10 +88,12 @@
           <% if @project.owner == @user %>
             <%= link_to "Supprimer", user_project_path(@user, @project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
             <%= link_to "Editer", edit_user_project_path(@user, @project) %>
+          <% elsif @project.requested_membership?(@user) %>
+              <p class="text-sm text-charcoal-600 mt-1">En attente de validation</p>
           <% elsif @project.collaborator?(@user) %>
               <%= link_to "Quitter le projet", leave_project_path(@project) %>
           <% else %>
-            <%= link_to "Demander à participer", join_project_path(@project) %>
+            <%= link_to "Demander à participer", join_project_path(@project), data: { turbo_method: :post } %>
           <% end %>
         </div>
       </div>

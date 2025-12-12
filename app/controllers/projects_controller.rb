@@ -55,8 +55,8 @@ class ProjectsController < ApplicationController
   end
 
   def join
-    current_project.project_memberships.create(user: current_user, role: "member")
-    redirect_to project_path(current_project), notice: "You have joined the project."
+    current_project.project_memberships.create!(user: current_user, role: "member", status: "pending")
+    redirect_to project_path(current_project), notice: "Your request to join the project has been sent."
   end
 
   def leave
