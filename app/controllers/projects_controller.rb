@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: "owner", user: current_user, status: ProjectMembership::ACTIVE ])
+    project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: ProjectMembership::OWNER, user: current_user, status: ProjectMembership::ACTIVE ])
     if project.save!
       redirect_to project_path(project), notice: "Project was successfully created."
     else
@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
   end
 
   def join
-    current_project.project_memberships.create!(user: current_user, role: "member", status: ProjectMembership::PENDING)
+    current_project.project_memberships.create!(user: current_user, role: ProjectMembership::MEMBER, status: ProjectMembership::PENDING)
     redirect_to project_path(current_project), notice: "Your request to join the project has been sent."
   end
 

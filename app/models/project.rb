@@ -9,7 +9,7 @@ class Project < ApplicationRecord
   validates :name, presence: true, length: { minimum: 1 }
 
   def owner
-    project_memberships.find_by(role: "owner").user
+    project_memberships.find_by(role: ProjectMembership::OWNER).user
   end
 
   def owner?(user)

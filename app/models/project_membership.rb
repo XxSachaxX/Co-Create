@@ -7,4 +7,9 @@ class ProjectMembership < ApplicationRecord
     PENDING = "pending",
     ACTIVE = "active"
   ]
+
+  ROLES =  [
+    OWNER = "owner",
+    MEMBER = "member",
+  ]
 end
