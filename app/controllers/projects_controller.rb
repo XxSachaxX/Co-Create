@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: "owner", user: current_user])
+    project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: "owner", user: current_user, status: "active"])
     if project.save!
       redirect_to project_path(project), notice: "Project was successfully created."
     else
