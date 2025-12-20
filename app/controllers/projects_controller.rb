@@ -54,11 +54,6 @@ class ProjectsController < ApplicationController
     render :user_projects
   end
 
-  def join
-    current_project.project_memberships.create!(user: current_user, role: ProjectMembership::MEMBER, status: ProjectMembership::PENDING)
-    redirect_to project_path(current_project), notice: "Your request to join the project has been sent."
-  end
-
   def leave
     return unless current_project.collaborator?(current_user)
 

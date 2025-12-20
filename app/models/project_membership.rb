@@ -10,6 +10,6 @@ class ProjectMembership < ApplicationRecord
 
   ROLES =  [
     OWNER = "owner",
-    MEMBER = "member",
+    MEMBER = "member"
   ]
 end

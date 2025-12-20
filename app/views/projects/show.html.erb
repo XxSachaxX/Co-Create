@@ -93,7 +93,7 @@
           <% elsif @project.collaborator?(@user) %>
               <%= link_to "Leave project", leave_project_path(@project) %>
           <% else %>
-            <%= link_to "Request to join", join_project_path(@project), data: { turbo_method: :post } %>
+          <%= link_to "Request to join", project_membership_requests_path(project_id: @project.id), data: { turbo_method: :post } %>
           <% end %>
         </div>
       </div>

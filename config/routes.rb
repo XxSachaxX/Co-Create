@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       post :leave, to: "projects#leave"
     end
   end
+  resources :project_membership_requests, only: [ :create ] do
+  end
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
