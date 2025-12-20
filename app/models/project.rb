@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   include Uuidable
   has_many :project_memberships, dependent: :destroy
   has_many :users, through: :project_memberships
+  has_many :project_membership_requests, dependent: :destroy
 
   accepts_nested_attributes_for :project_memberships
 
@@ -21,6 +22,6 @@ class Project < ApplicationRecord
   end
 
   def requested_membership?(user)
-    project_memberships.find_by(user: user, role: "member", status: ProjectMembership::PENDING).present?
+    project_membership_requests.find_by(user: user, status: ProjectMembership::PENDING).present?
   end
 end

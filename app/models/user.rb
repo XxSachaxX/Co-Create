@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :project_memberships, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :projects, through: :project_memberships
+  has_many :project_membership_requests, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 end
