@@ -55,6 +55,35 @@
       </div>
     </div>
 
+    <% if @project.owner?(@user) %>
+        <div class="lg:col-span-2">
+          <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
+            <!-- Gradient accent bar -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+
+            <h2 class="text-lg font-bold text-charcoal mb-4">Pending membership requests</h2>
+            <div class="text-charcoal-500 leading-relaxed">
+              <% if @project.project_membership_requests.pending.any? %>
+                <ul class="list-disc list-inside">
+                  <% @project.project_membership_requests.pending.each do |request| %>
+                    <li>
+                        <%= "Requested by: #{request.user.name} on #{request.created_at.strftime('%B %d, %Y')}" %>
+                        <br>
+                        <div class="flex space-x-2">
+                            <%= link_to "Accept" %>
+                            <%= link_to "Refuse" %>
+                        </div>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="italic text-charcoal-400">No pending requests</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
     <!-- Sidebar -->
     <div class="lg:col-span-1 space-y-6">
       <!-- Project Info Card -->
