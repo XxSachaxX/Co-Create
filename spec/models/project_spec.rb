@@ -8,7 +8,7 @@ RSpec.describe Project, type: :model do
 
     describe "when the user has a pending membership request" do
       let!(:wannabe_collaborator) { FactoryBot.create(:user) }
-      let!(:membership) { FactoryBot.create(:project_membership, project: project, user: wannabe_collaborator, status: "pending", role: "member") }
+      let!(:membership_request) { FactoryBot.create(:project_membership_request, project: project, user: wannabe_collaborator) }
 
 
       it "returns true if the user has a pending membership request" do
