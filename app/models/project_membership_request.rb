@@ -4,4 +4,9 @@ class ProjectMembershipRequest < ApplicationRecord
 
   belongs_to :project
   belongs_to :user
+
+  STATUSES =  [
+    PENDING = "pending",
+    ACCEPTED = "accepted",
+  ]
 end

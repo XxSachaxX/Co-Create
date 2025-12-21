@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     end
   end
   resources :project_membership_requests, only: [ :create ] do
+    member do
+      post :accept, to: "project_membership_requests#accept"
+    end
   end
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

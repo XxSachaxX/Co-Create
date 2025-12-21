@@ -1,4 +1,10 @@
 class ProjectMembershipRequestsController < ApplicationController
+  class RestrictedToOwnerError < StandardError
+    def initialize(message = "This action can only be performed by the project owner.")
+      super(message)
+    end
+  end
+
   def create
     project = Project.find(params[:project_id])
 
@@ -24,6 +30,19 @@ class ProjectMembershipRequestsController < ApplicationController
 
     redirect_to project_path(project)
   end
+
+  def accept
+    membership = ProjectMembershipRequest.find(params[:id])
+    project = membership.project
+
+    raise RestrictedToOwnerError unless project.owner?(current_user)
+
+    membership.update(status: ProjectMembershipRequest::ACCEPTED)
+    project.project_memberships.create(role: ProjectMembership::MEMBER, user: membership.user, status: ProjectMembership::ACTIVE)
+  end
+
+
+  private
 
   def current_user
     @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
