@@ -41,6 +41,14 @@ class ProjectMembershipRequestsController < ApplicationController
     project.project_memberships.create(role: ProjectMembership::MEMBER, user: membership.user, status: ProjectMembership::ACTIVE)
   end
 
+  def reject
+    membership = ProjectMembershipRequest.find(params[:id])
+    project = membership.project
+
+    raise RestrictedToOwnerError unless project.owner?(current_user)
+    membership.update(status: ProjectMembershipRequest::REJECTED)
+  end
+
 
   private
 

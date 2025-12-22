@@ -7,6 +7,7 @@ class ProjectMembershipRequest < ApplicationRecord
 
   STATUSES =  [
     PENDING = "pending",
-    ACCEPTED = "accepted"
-  ]
+    ACCEPTED = "accepted",
+    REJECTED = "rejected"
+  ].freeze
 end

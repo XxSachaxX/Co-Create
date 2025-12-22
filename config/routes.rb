@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :project_membership_requests, only: [ :create ] do
     member do
       post :accept, to: "project_membership_requests#accept"
+      post :reject, to: "project_membership_requests#reject"
     end
   end
   resources :passwords, param: :token

@@ -64,4 +64,33 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
       end
     end
   end
+
+  describe "POST #reject" do
+    let!(:owner) { FactoryBot.create(:user) }
+    let!(:project) { FactoryBot.create(:project) }
+    let!(:owner_membership) { FactoryBot.create(:project_membership, user: owner, project: project, role: "owner") }
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:membership_request) { FactoryBot.create(:project_membership_request, user: user, project: project) }
+
+    describe "when user is not the owner" do
+      before { sign_in user }
+
+      it "raises an error" do
+        expect { post reject_project_membership_request_path(membership_request) }.to raise_error { ProjectMembershipRequestsController::RestrictedToOwnerError }
+      end
+
+      describe "when user is the owner" do
+        before { sign_in owner }
+
+        it "does not raise an error" do
+          expect { post reject_project_membership_request_path(membership_request) }.not_to raise_error { ProjectMembershipRequestsController::RestrictedToOwnerError }
+        end
+
+        it "marks the request as rejected and does not create a new project membership" do
+          expect { post reject_project_membership_request_path(membership_request) }.to change { membership_request.reload.status }.from("pending").to("rejected")
+          expect(ProjectMembership.count).to eq(1)
+        end
+      end
+    end
+  end
 end
