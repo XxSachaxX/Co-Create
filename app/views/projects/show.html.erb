@@ -120,7 +120,7 @@
           <% elsif @project.requested_membership?(@user) %>
               <p class="text-sm text-charcoal-600 mt-1">Awaiting validation</p>
           <% elsif @project.collaborator?(@user) %>
-              <%= link_to "Leave project", leave_project_path(@project) %>
+              <%= link_to "Leave project", leave_project_path(@project), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to leave this project?" } %>
           <% else %>
           <%= link_to "Request to join", project_membership_requests_path(project_id: @project.id), data: { turbo_method: :post } %>
           <% end %>
