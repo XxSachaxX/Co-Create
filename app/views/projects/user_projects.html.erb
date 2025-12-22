@@ -47,7 +47,7 @@
               <% pending_count = project.project_membership_requests.pending.count %>
               <% if pending_count > 0 %>
                 <div class="absolute top-0 right-0 bg-lavender text-white text-xs font-semibold px-3 py-1 rounded-full">
-                  <%= pending_count %> pending <%= pending_count > 1 ? 'requests' : 'request' %>
+                  <%= pending_count %> pending <%= "request".pluralize(pending_count) %>
                 </div>
               <% end %>
             <% end %>
