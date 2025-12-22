@@ -24,4 +24,8 @@ class Project < ApplicationRecord
   def requested_membership?(user)
     project_membership_requests.find_by(user: user, status: ProjectMembership::PENDING).present?
   end
+
+  def create_membership!(user)
+    project_memberships.create!(role: ProjectMembership::MEMBER, user: user, status: ProjectMembership::ACTIVE)
+  end
 end
