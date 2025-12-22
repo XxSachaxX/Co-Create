@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_12_164843) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_141751) do
   create_table "project_membership_requests", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "description"
     t.string "project_id", null: false
     t.string "status", default: "pending", null: false
     t.datetime "updated_at", null: false
