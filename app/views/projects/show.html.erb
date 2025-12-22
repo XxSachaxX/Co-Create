@@ -62,20 +62,26 @@
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
 
             <h2 class="text-lg font-bold text-charcoal mb-4">Pending membership requests</h2>
-            <div class="text-charcoal-500 leading-relaxed">
+            <div class="leading-relaxed">
               <% if @project.project_membership_requests.pending.any? %>
-                <ul class="list-disc list-inside">
+                <div class="space-y-3">
                   <% @project.project_membership_requests.pending.each do |request| %>
-                    <li>
-                        <%= "Requested by: #{request.user.name} on #{request.created_at.strftime('%B %d, %Y')}" %>
-                        <br>
-                        <div class="flex space-x-2">
-                            <%= link_to "Accept", accept_project_membership_request_path(request.id), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to accept this request?" } %>
-                            <%= link_to "Refuse", reject_project_membership_request_path(request.id), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to refuse this request?" } %>
-                        </div>
-                    </li>
+                    <div class="border border-charcoal-200 rounded-lg p-4 bg-white hover:shadow-md hover:border-charcoal-300 transition-all duration-200">
+                      <div class="mb-3">
+                        <span class="font-semibold text-charcoal">Requested by: <%= request.user.name %></span>
+                        <span class="text-sm text-charcoal-500"> on <%= request.created_at.strftime('%B %d, %Y') %></span>
+                      </div>
+                      <div class="flex gap-2">
+                        <%= link_to "Accept", accept_project_membership_request_path(request.id),
+                            data: { turbo_method: :post, turbo_confirm: "Are you sure you want to accept this request?" },
+                            class: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium" %>
+                        <%= link_to "Refuse", reject_project_membership_request_path(request.id),
+                            data: { turbo_method: :post, turbo_confirm: "Are you sure you want to refuse this request?" },
+                            class: "px-4 py-2 border border-charcoal-300 text-charcoal-700 rounded-lg hover:bg-charcoal-50 transition font-medium" %>
+                      </div>
+                    </div>
                   <% end %>
-                </ul>
+                </div>
               <% else %>
                 <p class="italic text-charcoal-400">No pending requests</p>
               <% end %>
