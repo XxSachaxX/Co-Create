@@ -10,4 +10,12 @@ class ProjectMembershipRequest < ApplicationRecord
     ACCEPTED = "accepted",
     REJECTED = "rejected"
   ].freeze
+
+  def accept!
+    update(status: ProjectMembershipRequest::ACCEPTED)
+  end
+
+  def reject!
+    update(status: ProjectMembershipRequest::REJECTED)
+  end
 end
