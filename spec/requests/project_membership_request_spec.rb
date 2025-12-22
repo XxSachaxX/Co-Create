@@ -9,11 +9,19 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
 
     before { sign_in user }
 
-    describe "when user already has a membership request" do
-      let!(:membership_request) { FactoryBot.create(:project_membership_request, user: user, project: project) }
+    describe "when user already has a pending membership request" do
+      let!(:membership_request) { FactoryBot.create(:project_membership_request, user: user, project: project, status: ProjectMembershipRequest::PENDING) }
 
       it 'does not create a new project membership request' do
         expect { post project_membership_requests_path(project_id: project.id) }.not_to change { ProjectMembershipRequest.count }
+      end
+    end
+
+    describe "when user has a rejected membership request" do
+      let!(:membership_request) { FactoryBot.create(:project_membership_request, user: user, project: project, status: ProjectMembershipRequest::REJECTED) }
+
+      it 'creates a new pending project membership request' do
+        expect { post project_membership_requests_path(project_id: project.id) }.to change { ProjectMembershipRequest.count }.by(1)
       end
     end
 
@@ -26,7 +34,7 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
     end
 
     describe "when user does not have a membership request or a membership" do
-      it 'creates a new project membership request' do
+      it 'creates a new pending project membership request' do
         expect { post project_membership_requests_path(project_id: project.id) }.to change { ProjectMembershipRequest.count }.by(1)
       end
     end

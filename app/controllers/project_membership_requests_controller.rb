@@ -8,7 +8,7 @@ class ProjectMembershipRequestsController < ApplicationController
   def create
     project = Project.find(params[:project_id])
 
-    if ProjectMembershipRequest.exists?(user: current_user, project: project)
+    if ProjectMembershipRequest.exists?(user: current_user, project: project, status: ProjectMembershipRequest::PENDING)
       flash[:error] = "You already requested membership for this project."
       redirect_to project_path(project)
       return
@@ -39,6 +39,9 @@ class ProjectMembershipRequestsController < ApplicationController
 
     membership.accept!
     project.create_membership!(membership.user)
+
+    redirect_to project_path(project)
+    flash[:notice] = "Membership request accepted! #{membership.user.name} is now a member of #{project.name}."
   end
 
   def reject
@@ -47,6 +50,9 @@ class ProjectMembershipRequestsController < ApplicationController
 
     raise RestrictedToOwnerError unless project.owner?(current_user)
     membership.reject!
+
+    redirect_to project_path(project)
+    flash[:notice] = "Membership request rejected."
   end
 
 
