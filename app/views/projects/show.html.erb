@@ -70,8 +70,8 @@
                         <%= "Requested by: #{request.user.name} on #{request.created_at.strftime('%B %d, %Y')}" %>
                         <br>
                         <div class="flex space-x-2">
-                            <%= link_to "Accept" %>
-                            <%= link_to "Refuse" %>
+                            <%= link_to "Accept", accept_project_membership_request_path(request.id), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to accept this request?" } %>
+                            <%= link_to "Refuse", reject_project_membership_request_path(request.id), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to refuse this request?" } %>
                         </div>
                     </li>
                   <% end %>
