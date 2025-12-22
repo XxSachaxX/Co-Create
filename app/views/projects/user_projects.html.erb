@@ -42,6 +42,16 @@
           <div class="absolute -top-12 -right-12 w-24 h-24 bg-lavender/5 rounded-full blur-xl group-hover:bg-lavender/10 transition-all duration-300"></div>
 
           <div class="relative">
+            <!-- Pending requests pill (only visible to owner) -->
+            <% if project.owner?(@user) %>
+              <% pending_count = project.project_membership_requests.pending.count %>
+              <% if pending_count > 0 %>
+                <div class="absolute top-0 right-0 bg-lavender text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  <%= pending_count %> pending <%= pending_count > 1 ? 'requests' : 'request' %>
+                </div>
+              <% end %>
+            <% end %>
+
             <h2 class="text-lg font-bold mb-3 truncate text-charcoal group-hover:text-lavender-700 transition-colors duration-200"><%= project.name %></h2>
             <p class="text-charcoal-500 text-sm mb-5 line-clamp-3 leading-relaxed"><%= project.description %></p>
 
