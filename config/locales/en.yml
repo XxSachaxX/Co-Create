@@ -10,6 +10,9 @@ en:
       try_again_later: "Please try again later."
       password_mismatch: "Passwords did not match."
       link_invalid: "Password reset link is invalid or has expired."
+    users:
+      account_created: "Account created successfully!"
+
   projects:
     creation_successful: "Project created successfully!"
     deletion_successful: "Project deleted successfully!"
