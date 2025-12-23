@@ -1,6 +1,6 @@
 class ProjectMembershipRequestsController < ApplicationController
   class RestrictedToOwnerError < StandardError
-    def initialize(message = "This action can only be performed by the project owner.")
+    def initialize(message = I18n.t("project_membership_requests.errors.restricted_to_owner"))
       super(message)
     end
   end
@@ -9,13 +9,13 @@ class ProjectMembershipRequestsController < ApplicationController
     project = Project.find(params[:project_id])
 
     if ProjectMembershipRequest.exists?(user: current_user, project: project, status: ProjectMembershipRequest::PENDING)
-      flash[:error] = "You already requested membership for this project."
+      flash[:error] = I18n.t("project_membership_requests.already_requested")
       redirect_to project_path(project)
       return
     end
 
     if ProjectMembership.exists?(user: current_user, project: project)
-      flash[:error] = "You are already a member of this project."
+      flash[:error] = I18n.t("project_membership_requests.already_a_member")
       redirect_to project_path(project)
       return
     end
@@ -26,9 +26,9 @@ class ProjectMembershipRequestsController < ApplicationController
     )
 
     if project_membership_request.save!
-      flash[:notice] = "Membership request sent!"
+      flash[:notice] = I18n.t("project_membership_requests.request_sent")
     else
-      flash[:error] = "Failed to send membership request."
+      flash[:error] = I18n.t("project_membership_requests.errors.request_failed")
     end
 
     redirect_to project_path(project)
@@ -50,7 +50,7 @@ class ProjectMembershipRequestsController < ApplicationController
     project.create_membership!(membership.user)
 
     redirect_to project_path(project)
-    flash[:notice] = "Membership request accepted! #{membership.user.name} is now a member of #{project.name}."
+    flash[:notice] = I18n.t("project_membership_requests.accepted", username: membership.user.name, project_name: project.name)
   end
 
   def reject
@@ -61,7 +61,7 @@ class ProjectMembershipRequestsController < ApplicationController
     membership.reject!
 
     redirect_to project_path(project)
-    flash[:notice] = "Membership request rejected."
+    flash[:notice] = I18n.t("project_membership_requests.rejected")
   end
 
 
