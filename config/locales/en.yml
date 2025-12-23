@@ -4,15 +4,19 @@ en:
       try_again_later: "Please try again later."
       invalid_credentials: "Try another email address or password."
   passwords:
-    update: "Update your password"
-    new_password: "New password"
-    confirm_password: "Confirm password"
-    repeat_new_password: "Repeat new password"
-    save: "Save"
-    forgot_password: "Forgot your password?"
-    email: "Email"
-    enter_email_address: "Enter your email address"
-    email_reset_instructions: "Email reset instructions"
+    views:
+      edit:
+        update: "Update your password"
+        new_password: "New password"
+        confirm_password: "Confirm password"
+        repeat_new_password: "Repeat new password"
+        save: "Save"
+      new:
+        forgot_password: "Forgot your password?"
+        email: "Email"
+        enter_email_address: "Enter your email address"
+        email_reset_instructions: "Email reset instructions"
+        back: "Back to sign in"
     reset_instructions_sent: "Password reset instructions sent (if user with that email address exists)."
     reset_successful: "Password has been reset."
     errors:

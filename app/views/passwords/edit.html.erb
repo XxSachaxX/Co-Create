@@ -1,6 +1,6 @@
 <div class="min-h-screen flex items-center justify-center px-4">
   <div class="bg-white rounded-lg shadow-md border-t-4 border-t-lavender border border-charcoal-200 p-8 w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center text-charcoal"><%= I18n.t("passwords.update") %></h1>
+    <h1 class="text-2xl font-bold mb-6 text-center text-charcoal"><%= I18n.t("passwords.views.edit.update") %></h1>
 
     <% if flash[:alert] %>
       <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
@@ -10,26 +10,26 @@
 
     <%= form_with url: password_path(params[:token]), method: :put, class: "flex flex-col gap-4" do |form| %>
       <div class="flex flex-col gap-2">
-        <%= form.label :password, I18n.t("passwords.new_password"), class: "text-sm font-medium text-charcoal-700" %>
+        <%= form.label :password, I18n.t("passwords.views.edit.new_password"), class: "text-sm font-medium text-charcoal-700" %>
         <%= form.password_field :password,
           required: true,
           autocomplete: "new-password",
-          placeholder: I18n.t("passwords.new_password"),
+          placeholder: I18n.t("passwords.views.edit.new_password"),
           maxlength: 72,
           class: "border border-charcoal-200 rounded-md px-4 py-2 bg-white text-charcoal focus:ring-2 focus:ring-lavender focus:border-transparent" %>
       </div>
 
       <div class="flex flex-col gap-2">
-        <%= form.label :password_confirmation, I18n.t("passwords.confirm_password"), class: "text-sm font-medium text-charcoal-700" %>
+        <%= form.label :password_confirmation, I18n.t("passwords.views.edit.confirm_password"), class: "text-sm font-medium text-charcoal-700" %>
         <%= form.password_field :password_confirmation,
           required: true,
           autocomplete: "new-password",
-          placeholder: I18n.t("passwords.repeat_new_password"),
+          placeholder: I18n.t("passwords.views.edit.confirm_password"),
           maxlength: 72,
           class: "border border-charcoal-200 rounded-md px-4 py-2 bg-white text-charcoal focus:ring-2 focus:ring-lavender focus:border-transparent" %>
       </div>
 
-      <%= form.submit I18n.t("passwords.save"),
+      <%= form.submit I18n.t("passwords.views.edit.save"),
         class: "w-full rounded-md px-4 py-2 bg-lavender text-white font-medium hover:bg-lavender-500 transition cursor-pointer" %>
     <% end %>
   </div>
