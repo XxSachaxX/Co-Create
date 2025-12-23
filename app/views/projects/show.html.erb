@@ -47,7 +47,7 @@
         <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.description') %></h2>
         <div class="text-charcoal-500 leading-relaxed">
           <% if @project.description.present? %>
-            <p><%= @project.description %></p>
+            <p class="whitespace-pre-wrap break-words"><%= @project.description %></p>
           <% else %>
             <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_description') %></p>
           <% end %>
