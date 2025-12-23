@@ -114,9 +114,9 @@
   <% if @projects.empty? %>
     <div class="text-center py-12">
       <div class="inline-block p-6 bg-white rounded-lg shadow-md border border-charcoal-200">
-        <p class="text-charcoal-500 mb-4">No projects yet. Create your first project!</p>
+        <p class="text-charcoal-500 mb-4"><%= I18n.t('projects.views.index.no_projects_message') %></p>
         <% if authenticated? %>
-          <%= link_to "Get started", new_user_project_path(user_id: @user.id), class: "inline-block rounded-md px-4 py-2 bg-mustard text-charcoal font-medium hover:bg-mustard-500 transition" %>
+          <%= link_to I18n.t('projects.views.index.get_started'), new_user_project_path(user_id: @user.id), class: "inline-block rounded-md px-4 py-2 bg-mustard text-charcoal font-medium hover:bg-mustard-500 transition" %>
         <% end %>
       </div>
     </div>
