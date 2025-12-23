@@ -5,7 +5,7 @@
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
-      <span class="text-sm font-medium"><%= I18n.t('projects.show.back') %></span>
+      <span class="text-sm font-medium"><%= I18n.t('projects.views.show.back') %></span>
     <% end %>
   </div>
 
@@ -21,11 +21,11 @@
               <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                 <span class="text-white text-sm font-medium"><%= @project.owner.name.first.upcase %></span>
               </div>
-              <span class="text-white/80 text-sm"><%= I18n.t('projects.show.created_by') %> <%= @project.owner.name %></span>
+              <span class="text-white/80 text-sm"><%= I18n.t('projects.views.show.created_by') %> <%= @project.owner.name %></span>
             </div>
             <span class="inline-flex items-center gap-1 px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full">
               <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-              <%= I18n.t('projects.show.active') %>
+              <%= I18n.t('projects.views.show.active') %>
             </span>
           </div>
         </div>
@@ -44,12 +44,12 @@
         <!-- Gradient accent bar -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
 
-        <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.show.description') %></h2>
+        <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.description') %></h2>
         <div class="text-charcoal-500 leading-relaxed">
           <% if @project.description.present? %>
             <p><%= @project.description %></p>
           <% else %>
-            <p class="italic text-charcoal-400"><%= I18n.t('projects.show.no_description') %></p>
+            <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_description') %></p>
           <% end %>
         </div>
       </div>
@@ -61,21 +61,21 @@
             <!-- Gradient accent bar -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
 
-            <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.show.pending_requests') %></h2>
+            <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.pending_requests') %></h2>
             <div class="leading-relaxed">
               <% if @project.project_membership_requests.pending.any? %>
                 <div class="space-y-3">
                   <% @project.project_membership_requests.pending.each do |request| %>
                     <div class="border border-charcoal-200 rounded-lg p-4 bg-white hover:shadow-md hover:border-charcoal-300 transition-all duration-200">
                       <div class="mb-3">
-                        <span class="font-semibold text-charcoal"><%= I18n.t('projects.show.requested_by', username: request.user.name) %></span>
-                        <span class="text-sm text-charcoal-500"> <%= I18n.t('projects.show.created_at', date: request.created_at.strftime('%B %d, %Y')) %></span>
+                        <span class="font-semibold text-charcoal"><%= I18n.t('projects.views.show.requested_by', username: request.user.name) %></span>
+                        <span class="text-sm text-charcoal-500"> <%= I18n.t('projects.views.show.created_at', date: request.created_at.strftime('%B %d, %Y')) %></span>
                       </div>
 
                       <% if request.description.present? %>
                         <div class="mb-4 p-4 bg-charcoal-50 rounded-lg border border-charcoal-200" data-controller="expandable-text">
                           <div class="mb-2">
-                            <span class="text-xs font-semibold text-charcoal-500 uppercase tracking-wide"><%= I18n.t('projects.show.message') %></span>
+                            <span class="text-xs font-semibold text-charcoal-500 uppercase tracking-wide"><%= I18n.t('projects.views.show.message') %></span>
                           </div>
                           <div class="relative text-left">
                             <div data-expandable-text-target="preview" class="text-sm text-charcoal-700 whitespace-pre-wrap leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-align: left;"><%= request.description %></div>
@@ -95,18 +95,18 @@
                       <% end %>
 
                       <div class="flex gap-2">
-                        <%= link_to I18n.t('accept'), accept_project_membership_request_path(request.id),
-                            data: { turbo_method: :post, turbo_confirm: I18n.t('project_membership_requests.acceptance_warning') },
+                        <%= link_to I18n.t('projects.views.show.accept'), accept_project_membership_request_path(request.id),
+                            data: { turbo_method: :post, turbo_confirm: I18n.t('projects.views.show.acceptance_warning') },
                             class: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium" %>
-                        <%= link_to I18n.t('refuse'), reject_project_membership_request_path(request.id),
-                            data: { turbo_method: :post, turbo_confirm: I18n.t('project_membership_requests.rejection_warning') },
+                        <%= link_to I18n.t('projects.views.show.reject'), reject_project_membership_request_path(request.id),
+                            data: { turbo_method: :post, turbo_confirm: I18n.t('projects.views.show.rejection_warning') },
                             class: "px-4 py-2 border border-charcoal-300 text-charcoal-700 rounded-lg hover:bg-charcoal-50 transition font-medium" %>
                       </div>
                     </div>
                   <% end %>
                 </div>
               <% else %>
-                <p class="italic text-charcoal-400"><%= I18n.t('project_membership_requests.no_pending_requests') %></p>
+                <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_pending_requests') %></p>
               <% end %>
             </div>
           </div>
@@ -120,11 +120,11 @@
         <!-- Gradient accent bar -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
 
-        <h3 class="text-sm font-bold text-charcoal mb-4 uppercase tracking-wide"><%= I18n.t('project_membership_requests.project_details') %></h3>
+        <h3 class="text-sm font-bold text-charcoal mb-4 uppercase tracking-wide"><%= I18n.t('projects.views.show.project_details') %></h3>
 
         <div class="space-y-4">
           <div>
-            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('project_membership_requests.owner') %></span>
+            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.owner') %></span>
             <div class="flex items-center gap-2 mt-1">
               <div class="w-6 h-6 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
                 <span class="text-white text-xs font-medium"><%= @project.owner.name.first.upcase %></span>
@@ -134,20 +134,20 @@
           </div>
 
           <div>
-            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('project_membership_requests.created') %></span>
+            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.created') %></span>
             <p class="text-sm text-charcoal-600 mt-1"><%= @project.created_at.strftime("%B %d, %Y") %></p>
           </div>
 
           <div>
-            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('project_membership_requests.last_updated') %></span>
+            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.last_updated') %></span>
             <p class="text-sm text-charcoal-600 mt-1"><%= @project.updated_at.strftime("%B %d, %Y") %></p>
           </div>
 
           <% if @project.owner?(@user) %>
-            <%= link_to I18n.t('project_membership_requests.delete'), user_project_path(@user, @project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-            <%= link_to I18n.t('project_membership_requests.edit'), edit_user_project_path(@user, @project) %>
+            <%= link_to I18n.t('projects.views.show.delete'), user_project_path(@user, @project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+            <%= link_to I18n.t('projects.views.show.edit'), edit_user_project_path(@user, @project) %>
           <% elsif @project.requested_membership?(@user) %>
-              <p class="text-sm text-charcoal-600 mt-1"><%= I18n.t('project_membership_requests.awaiting_validation') %></p>
+              <p class="text-sm text-charcoal-600 mt-1"><%= I18n.t('projects.views.show.awaiting_validation') %></p>
           <% elsif @project.collaborator?(@user) %>
               <%= link_to "Leave project", leave_project_path(@project), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to leave this project?" } %>
           <% else %>
