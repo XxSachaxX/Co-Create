@@ -115,8 +115,8 @@ en:
         description: "Description"
         no_description: "No description provided yet."
         pending_requests: "Pending membership requests"
-        requested_by: "Requested by : $%{username}"
-        created_at: "on $%{date}"
+        requested_by: "Requested by : %{username}"
+        created_at: "on %{date}"
         message: "Message"
         accept: "Accept"
         reject: "Reject"
@@ -138,7 +138,7 @@ en:
         request_to_join: "Request to join"
       user_projects:
         back: "Back to all projects"
-        user_projects: "$%{username}'s Projects"
+        user_projects: "%{username}'s Projects"
         create_project: "Create a project"
         active: "Active"
         project_count:
