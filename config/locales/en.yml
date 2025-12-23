@@ -1,4 +1,8 @@
 en:
+  sessions:
+    errors:
+      try_again_later: "Please try again later."
+      invalid_credentials: "Try another email address or password."
   passwords:
     reset_instructions_sent: "Password reset instructions sent (if user with that email address exists)."
     reset_successful: "Password has been reset."
