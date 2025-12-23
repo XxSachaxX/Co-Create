@@ -1,4 +1,11 @@
 en:
+  passwords:
+    reset_instructions_sent: "Password reset instructions sent (if user with that email address exists)."
+    reset_successful: "Password has been reset."
+    errors:
+      try_again_later: "Please try again later."
+      password_mismatch: "Passwords did not match."
+      link_invalid: "Password reset link is invalid or has expired."
   projects:
     creation_successful: "Project created successfully!"
     deletion_successful: "Project deleted successfully!"
