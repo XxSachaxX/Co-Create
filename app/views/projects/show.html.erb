@@ -119,6 +119,47 @@
         </div>
     <% end %>
 
+    <!-- Members Section -->
+    <div class="lg:col-span-2">
+      <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
+        <!-- Gradient accent bar -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+
+        <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.members') %></h2>
+        <div class="leading-relaxed">
+          <% active_memberships = @project.project_memberships.where(status: ProjectMembership::ACTIVE).includes(:user).order(created_at: :asc) %>
+          <% if active_memberships.any? %>
+            <div class="space-y-3">
+              <% active_memberships.each do |membership| %>
+                <div class="border border-charcoal-200 rounded-lg p-4 bg-white hover:shadow-md hover:border-charcoal-300 transition-all duration-200">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
+                        <span class="text-white text-sm font-medium"><%= membership.user.name.first.upcase %></span>
+                      </div>
+                      <div>
+                        <div class="flex items-center gap-2">
+                          <span class="font-semibold text-charcoal"><%= membership.user.name %></span>
+                          <% if membership.role == ProjectMembership::OWNER %>
+                            <span class="inline-flex items-center px-2 py-0.5 bg-lavender-100 text-lavender-700 text-xs font-medium rounded-full">
+                              <%= I18n.t('projects.views.show.owner_badge') %>
+                            </span>
+                          <% end %>
+                        </div>
+                        <span class="text-xs text-charcoal-500"><%= I18n.t('projects.views.show.joined_on', date: membership.created_at.strftime('%B %d, %Y')) %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_members') %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <!-- Sidebar -->
     <div class="lg:col-span-1 space-y-6">
       <!-- Project Info Card -->

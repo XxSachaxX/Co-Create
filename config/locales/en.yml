@@ -139,6 +139,10 @@ en:
         leave_project: "Leave project"
         leave_confirm: "Are you sure you want to leave this project?"
         request_to_join: "Request to join"
+        members: "Members"
+        owner_badge: "Owner"
+        joined_on: "Joined on %{date}"
+        no_members: "No members yet."
       user_projects:
         back: "Back to all projects"
         user_projects: "%{username}'s Projects"
