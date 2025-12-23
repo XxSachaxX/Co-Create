@@ -1,4 +1,9 @@
 en:
+  projects:
+    creation_successful: "Project created successfully!"
+    deletion_successful: "Project deleted successfully!"
+    update_successful: "Project updated successfully!"
+    successfully_left: "You have left the project."
   project_membership_requests:
     already_requested: "You have already requested to join this project."
     request_sent: "Membership request sent !"

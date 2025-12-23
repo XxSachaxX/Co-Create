@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   def create
     project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: ProjectMembership::OWNER, user: current_user, status: ProjectMembership::ACTIVE ])
     if project.save!
-      redirect_to project_path(project), notice: "Project was successfully created."
+      redirect_to project_path(project), notice: I18n.t("projects.creation_successful")
     else
       render :new
     end
@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
   def destroy
     authorize current_project
     current_project.destroy!
-    redirect_to projects_path, notice: "Project was successfully deleted."
+    redirect_to projects_path, notice: I18n.t("projects.deletion_successful")
   end
 
   def show
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   def update
     authorize current_project
     if current_project.update(project_params)
-      redirect_to project_path(current_project), notice: "Project was successfully updated."
+      redirect_to project_path(current_project), notice: I18n.t("projects.update_successful")
     else
       render :edit
     end
@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
     return unless current_project.collaborator?(current_user)
 
     current_project.project_memberships.find_by(user: current_user).destroy!
-    redirect_to project_path(current_project), notice: "You have left the project."
+    redirect_to project_path(current_project), notice: I18n.t("projects.successfully_left")
   end
 
   private
