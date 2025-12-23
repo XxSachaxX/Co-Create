@@ -40,3 +40,12 @@ en:
     errors:
       restricted_to_owner: "This action can only be performed by the project owner."
       request_failed: "Failed to send membership request."
+    views:
+      new:
+        back: "Back to project"
+        request_membership: "Request to Join"
+        notice: "The project owner will review your request before approving or declining it."
+        reason_to_join: "Why do you want to join this project?"
+        description_placeholder: "Tell the project owner why you'd like to join..."
+        send_request: "Send Request"
+        cancel: "Cancel"
