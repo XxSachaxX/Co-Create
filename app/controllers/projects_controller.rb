@@ -11,17 +11,19 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    project = current_user.projects.new(**project_params, project_memberships_attributes: [ role: ProjectMembership::OWNER, user: current_user, status: ProjectMembership::ACTIVE ])
-    if project.save!
-      redirect_to project_path(project), notice: I18n.t("projects.controller.creation_successful")
+    @user = current_user
+    @project = @user.projects.new(**project_params, project_memberships_attributes: [ role: ProjectMembership::OWNER, user: @user, status: ProjectMembership::ACTIVE ])
+    if @project.save!
+      redirect_to project_path(@project), notice: I18n.t("projects.controller.creation_successful")
     else
       render :new
     end
   end
 
   def destroy
-    authorize current_project
-    current_project.destroy!
+    @project = current_project
+    authorize @project
+    @project.destroy!
     redirect_to projects_path, notice: I18n.t("projects.controller.deletion_successful")
   end
 
@@ -33,14 +35,17 @@ class ProjectsController < ApplicationController
 
   def edit
     @user = current_user
-    authorize current_project
+    @project = current_project
+    authorize @project
     render :edit
   end
 
   def update
-    authorize current_project
-    if current_project.update(project_params)
-      redirect_to project_path(current_project), notice: I18n.t("projects.controller.update_successful")
+    @user = current_user
+    @project = current_project
+    authorize @project
+    if @project.update(project_params)
+      redirect_to project_path(@project), notice: I18n.t("projects.controller.update_successful")
     else
       render :edit
     end
@@ -54,10 +59,12 @@ class ProjectsController < ApplicationController
   end
 
   def leave
-    return unless current_project.collaborator?(current_user)
+    @project = current_project
+    @user = current_user
+    return unless @project.collaborator?(@user)
 
-    current_project.project_memberships.find_by(user: current_user).destroy!
-    redirect_to project_path(current_project), notice: I18n.t("projects.controller.successfully_left")
+    @project.project_memberships.find_by(user: @user).destroy!
+    redirect_to project_path(@project), notice: I18n.t("projects.controller.successfully_left")
   end
 
   private

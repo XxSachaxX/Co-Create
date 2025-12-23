@@ -1,0 +1,25 @@
+<%
+  # Button variants with Tailwind classes
+  variants = {
+    primary: "px-4 py-2 bg-gradient-to-r from-lavender to-lavender-400 text-white rounded-lg hover:from-lavender-700 hover:to-lavender-400 hover:shadow-md transition-all duration-200 font-medium",
+    secondary: "px-4 py-2 border border-charcoal-300 text-charcoal-700 rounded-lg hover:bg-charcoal-50 transition-all duration-200 font-medium",
+    danger: "px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 hover:border-red-400 transition-all duration-200 font-medium",
+    success: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium"
+  }
+
+  # Default to secondary if variant not specified or invalid
+  variant ||= :secondary
+  button_class = variants[variant] || variants[:secondary]
+
+  # Merge custom classes if provided
+  if defined?(html_class) && html_class.present?
+    button_class = "#{button_class} #{html_class}"
+  end
+
+  # Build data attributes
+  data_attrs = {}
+  data_attrs[:turbo_method] = http_method if defined?(http_method) && http_method.present?
+  data_attrs[:turbo_confirm] = confirm if defined?(confirm) && confirm.present?
+%>
+
+<%= link_to text, path, class: button_class, data: data_attrs %>

@@ -95,12 +95,18 @@
                       <% end %>
 
                       <div class="flex gap-2">
-                        <%= link_to I18n.t('projects.views.show.accept'), accept_project_membership_request_path(request.id),
-                            data: { turbo_method: :post, turbo_confirm: I18n.t('projects.views.show.acceptance_warning') },
-                            class: "px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium" %>
-                        <%= link_to I18n.t('projects.views.show.reject'), reject_project_membership_request_path(request.id),
-                            data: { turbo_method: :post, turbo_confirm: I18n.t('projects.views.show.rejection_warning') },
-                            class: "px-4 py-2 border border-charcoal-300 text-charcoal-700 rounded-lg hover:bg-charcoal-50 transition font-medium" %>
+                        <%= render 'shared/button_link',
+                            text: I18n.t('projects.views.show.accept'),
+                            path: accept_project_membership_request_path(request.id),
+                            variant: :success,
+                            http_method: :post,
+                            confirm: I18n.t('projects.views.show.acceptance_warning') %>
+                        <%= render 'shared/button_link',
+                            text: I18n.t('projects.views.show.reject'),
+                            path: reject_project_membership_request_path(request.id),
+                            variant: :secondary,
+                            http_method: :post,
+                            confirm: I18n.t('projects.views.show.rejection_warning') %>
                       </div>
                     </div>
                   <% end %>
@@ -144,14 +150,32 @@
           </div>
 
           <% if @project.owner?(@user) %>
-            <%= link_to I18n.t('projects.views.show.delete'), user_project_path(@user, @project), data: { turbo_method: :delete, turbo_confirm: I18n.t('projects.views.show.delete_confirm') } %>
-            <%= link_to I18n.t('projects.views.show.edit'), edit_user_project_path(@user, @project) %>
+            <div class="flex gap-2">
+              <%= render 'shared/button_link',
+                  text: I18n.t('projects.views.show.delete'),
+                  path: user_project_path(@user, @project),
+                  variant: :danger,
+                  http_method: :delete,
+                  confirm: I18n.t('projects.views.show.delete_confirm') %>
+              <%= render 'shared/button_link',
+                  text: I18n.t('projects.views.show.edit'),
+                  path: edit_user_project_path(@user, @project),
+                  variant: :secondary %>
+            </div>
           <% elsif @project.requested_membership?(@user) %>
               <p class="text-sm text-charcoal-600 mt-1"><%= I18n.t('projects.views.show.awaiting_validation') %></p>
           <% elsif @project.collaborator?(@user) %>
-              <%= link_to I18n.t('projects.views.show.leave_project'), leave_project_path(@project), data: { turbo_method: :post, turbo_confirm: I18n.t('projects.views.show.leave_confirm') } %>
+              <%= render 'shared/button_link',
+                  text: I18n.t('projects.views.show.leave_project'),
+                  path: leave_project_path(@project),
+                  variant: :danger,
+                  http_method: :post,
+                  confirm: I18n.t('projects.views.show.leave_confirm') %>
           <% else %>
-          <%= link_to I18n.t('projects.views.show.request_to_join'), new_project_membership_request_path(project_id: @project.id) %>
+          <%= render 'shared/button_link',
+              text: I18n.t('projects.views.show.request_to_join'),
+              path: new_project_membership_request_path(project_id: @project.id),
+              variant: :primary %>
           <% end %>
         </div>
       </div>
