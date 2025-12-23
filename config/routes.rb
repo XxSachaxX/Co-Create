@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       post :leave, to: "projects#leave"
     end
   end
-  resources :project_membership_requests, only: [ :create ] do
+  resources :project_membership_requests, only: [ :create, :new ] do
     member do
       post :accept, to: "project_membership_requests#accept"
       post :reject, to: "project_membership_requests#reject"

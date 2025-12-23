@@ -20,7 +20,10 @@ class ProjectMembershipRequestsController < ApplicationController
       return
     end
 
-    project_membership_request = project.project_membership_requests.new(user: current_user)
+    project_membership_request = project.project_membership_requests.new(
+      user: current_user,
+      description: membership_request_params[:description]
+    )
 
     if project_membership_request.save!
       flash[:notice] = "Membership request sent!"
@@ -29,6 +32,12 @@ class ProjectMembershipRequestsController < ApplicationController
     end
 
     redirect_to project_path(project)
+  end
+
+  def new
+    @user = current_user
+    @project = Project.find(params[:project_id])
+    @project_membership_request = @project.project_membership_requests.new(user: @user)
   end
 
   def accept
@@ -60,5 +69,9 @@ class ProjectMembershipRequestsController < ApplicationController
 
   def current_user
     @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
+  end
+
+  def membership_request_params
+    params.require(:project_membership_request).permit(:description)
   end
 end

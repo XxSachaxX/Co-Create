@@ -71,6 +71,29 @@
                         <span class="font-semibold text-charcoal">Requested by: <%= request.user.name %></span>
                         <span class="text-sm text-charcoal-500"> on <%= request.created_at.strftime('%B %d, %Y') %></span>
                       </div>
+
+                      <% if request.description.present? %>
+                        <div class="mb-4 p-4 bg-charcoal-50 rounded-lg border border-charcoal-200" data-controller="expandable-text">
+                          <div class="mb-2">
+                            <span class="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">Message</span>
+                          </div>
+                          <div class="relative text-left">
+                            <div data-expandable-text-target="preview" class="text-sm text-charcoal-700 whitespace-pre-wrap leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-align: left;"><%= request.description %></div>
+                            <div data-expandable-text-target="full" class="text-sm text-charcoal-700 whitespace-pre-wrap leading-relaxed" style="display: none; text-align: left;"><%= request.description %></div>
+                          </div>
+                          <% if request.description.length > 60 %>
+                            <button type="button"
+                                    data-action="click->expandable-text#toggle"
+                                    class="mt-3 inline-flex items-center gap-1 text-xs text-lavender-600 hover:text-lavender-700 font-medium transition">
+                              <span data-expandable-text-target="buttonText">Show more</span>
+                              <svg data-expandable-text-target="icon" class="w-3 h-3 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                              </svg>
+                            </button>
+                          <% end %>
+                        </div>
+                      <% end %>
+
                       <div class="flex gap-2">
                         <%= link_to "Accept", accept_project_membership_request_path(request.id),
                             data: { turbo_method: :post, turbo_confirm: "Are you sure you want to accept this request?" },
@@ -128,7 +151,7 @@
           <% elsif @project.collaborator?(@user) %>
               <%= link_to "Leave project", leave_project_path(@project), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to leave this project?" } %>
           <% else %>
-          <%= link_to "Request to join", project_membership_requests_path(project_id: @project.id), data: { turbo_method: :post } %>
+          <%= link_to "Request to join", new_project_membership_request_path(project_id: @project.id) %>
           <% end %>
         </div>
       </div>
