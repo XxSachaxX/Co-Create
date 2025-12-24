@@ -61,7 +61,7 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
       before { sign_in user }
 
       it "raises an error" do
-        expect { post accept_project_membership_request_path(membership_request) }.to raise_error { ProjectMembershipRequestsController::RestrictedToOwnerError }
+        expect { post accept_project_membership_request_path(membership_request) }.to raise_error { RestrictedToOwnerError }
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
       before { sign_in owner }
 
       it "does not raise an error" do
-        expect { post accept_project_membership_request_path(membership_request) }.not_to raise_error { ProjectMembershipRequestsController::RestrictedToOwnerError }
+        expect { post accept_project_membership_request_path(membership_request) }.not_to raise_error { RestrictedToOwnerError }
       end
 
       it "marks the request as accepted" do
@@ -94,14 +94,14 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
       before { sign_in user }
 
       it "raises an error" do
-        expect { post reject_project_membership_request_path(membership_request) }.to raise_error { ProjectMembershipRequestsController::RestrictedToOwnerError }
+        expect { post reject_project_membership_request_path(membership_request) }.to raise_error { RestrictedToOwnerError }
       end
 
       describe "when user is the owner" do
         before { sign_in owner }
 
         it "does not raise an error" do
-          expect { post reject_project_membership_request_path(membership_request) }.not_to raise_error { ProjectMembershipRequestsController::RestrictedToOwnerError }
+          expect { post reject_project_membership_request_path(membership_request) }.not_to raise_error { RestrictedToOwnerError }
         end
 
         it "marks the request as rejected and does not create a new project membership" do

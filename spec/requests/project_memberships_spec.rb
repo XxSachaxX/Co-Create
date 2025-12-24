@@ -18,7 +18,7 @@ RSpec.describe "ProjectMemberships", type: :request do
         it "raises an error" do
           expect {
             post revoke_project_membership_path(user_membership)
-          }.to raise_error(ProjectMembershipsController::RestrictedToOwnerError)
+          }.to raise_error(RestrictedToOwnerError)
         end
       end
     end
@@ -32,7 +32,7 @@ RSpec.describe "ProjectMemberships", type: :request do
         it "raises an error" do
           expect {
             post revoke_project_membership_path(user_membership)
-          }.to raise_error(ProjectMembershipsController::RestrictedToOwnerError)
+          }.to raise_error(RestrictedToOwnerError)
         end
       end
     end

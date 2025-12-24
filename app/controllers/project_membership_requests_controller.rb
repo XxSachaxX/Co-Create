@@ -1,10 +1,4 @@
 class ProjectMembershipRequestsController < ApplicationController
-  class RestrictedToOwnerError < StandardError
-    def initialize(message = I18n.t("project_membership_requests.controller.errors.restricted_to_owner"))
-      super(message)
-    end
-  end
-
   def create
     project = Project.find(params[:project_id])
 
