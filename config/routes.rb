@@ -12,6 +12,11 @@ Rails.application.routes.draw do
       post :leave, to: "projects#leave"
     end
   end
+  resources :project_memberships, only: [] do
+    member do
+      post :revoke, to: "project_memberships#revoke"
+    end
+  end
   resources :project_membership_requests, only: [ :create, :new ] do
     member do
       post :accept, to: "project_membership_requests#accept"
