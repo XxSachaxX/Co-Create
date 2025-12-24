@@ -1,17 +1,17 @@
 class ProjectsController < ApplicationController
   def index
     @projects = Project.all
-    @user = current_user
+    @user = Current.user
     render :index
   end
 
   def new
-    @user = current_user
+    @user = Current.user
     @project = Project.new
   end
 
   def create
-    @user = current_user
+    @user = Current.user
     @project = @user.projects.new(**project_params, project_memberships_attributes: [ role: ProjectMembership::OWNER, user: @user, status: ProjectMembership::ACTIVE ])
     if @project.save!
       redirect_to project_path(@project), notice: I18n.t("projects.controller.creation_successful")
@@ -29,19 +29,19 @@ class ProjectsController < ApplicationController
 
   def show
     @project = current_project
-    @user = current_user
+    @user = Current.user
     render :show
   end
 
   def edit
-    @user = current_user
+    @user = Current.user
     @project = current_project
     authorize @project
     render :edit
   end
 
   def update
-    @user = current_user
+    @user = Current.user
     @project = current_project
     authorize @project
     if @project.update(project_params)
@@ -60,7 +60,7 @@ class ProjectsController < ApplicationController
 
   def leave
     @project = current_project
-    @user = current_user
+    @user = Current.user
     return unless @project.collaborator?(@user)
 
     @project.project_memberships.find_by(user: @user).destroy!
@@ -75,9 +75,5 @@ class ProjectsController < ApplicationController
 
   def current_project
     @current_project ||= Project.find(params[:id]) if params[:id]
-  end
-
-  def current_user
-    @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
   end
 end

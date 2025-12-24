@@ -7,15 +7,11 @@ class ProjectMembershipsController < ApplicationController
 
   def revoke
     membership = ProjectMembership.find(params[:id])
-    raise RestrictedToOwnerError unless membership.project.owner?(current_user)
+    raise RestrictedToOwnerError unless membership.project.owner?(Current.user)
 
     membership.update(status: "revoked")
     redirect_to project_path(membership.project), notice: "Membership revoked"
   end
 
   private
-
-  def current_user
-    @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
-  end
 end

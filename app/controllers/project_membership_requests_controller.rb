@@ -8,20 +8,20 @@ class ProjectMembershipRequestsController < ApplicationController
   def create
     project = Project.find(params[:project_id])
 
-    if ProjectMembershipRequest.exists?(user: current_user, project: project, status: ProjectMembershipRequest::PENDING)
+    if ProjectMembershipRequest.exists?(user: Current.user, project: project, status: ProjectMembershipRequest::PENDING)
       flash[:error] = I18n.t("project_membership_requests.controller.already_requested")
       redirect_to project_path(project)
       return
     end
 
-    if ProjectMembership.exists?(user: current_user, project: project)
+    if ProjectMembership.exists?(user: Current.user, project: project)
       flash[:error] = I18n.t("project_membership_requests.controller.already_a_member")
       redirect_to project_path(project)
       return
     end
 
     project_membership_request = project.project_membership_requests.new(
-      user: current_user,
+      user: Current.user,
       description: membership_request_params[:description]
     )
 
@@ -35,7 +35,7 @@ class ProjectMembershipRequestsController < ApplicationController
   end
 
   def new
-    @user = current_user
+    @user = Current.user
     @project = Project.find(params[:project_id])
     @project_membership_request = @project.project_membership_requests.new(user: @user)
   end
@@ -44,7 +44,7 @@ class ProjectMembershipRequestsController < ApplicationController
     membership = ProjectMembershipRequest.find(params[:id])
     project = membership.project
 
-    raise RestrictedToOwnerError unless project.owner?(current_user)
+    raise RestrictedToOwnerError unless project.owner?(Current.user)
 
     membership.accept!
     project.create_membership!(membership.user)
@@ -57,7 +57,7 @@ class ProjectMembershipRequestsController < ApplicationController
     membership = ProjectMembershipRequest.find(params[:id])
     project = membership.project
 
-    raise RestrictedToOwnerError unless project.owner?(current_user)
+    raise RestrictedToOwnerError unless project.owner?(Current.user)
     membership.reject!
 
     redirect_to project_path(project)
@@ -66,10 +66,6 @@ class ProjectMembershipRequestsController < ApplicationController
 
 
   private
-
-  def current_user
-    @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
-  end
 
   def membership_request_params
     params.require(:project_membership_request).permit(:description)

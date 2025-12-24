@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  private
+
+  def pundit_user
+    Current.user
+  end
 end
