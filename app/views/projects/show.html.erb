@@ -149,6 +149,16 @@
                         <span class="text-xs text-charcoal-500"><%= I18n.t('projects.views.show.joined_on', date: membership.created_at.strftime('%B %d, %Y')) %></span>
                       </div>
                     </div>
+                    <% if @project.owner?(@user) && membership.role != ProjectMembership::OWNER %>
+                      <div>
+                        <%= render 'shared/button_link',
+                            text: I18n.t('projects.views.show.revoke_member'),
+                            path: revoke_project_membership_path(membership),
+                            variant: :danger,
+                            http_method: :post,
+                            confirm: I18n.t('projects.views.show.revoke_confirm') %>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
               <% end %>

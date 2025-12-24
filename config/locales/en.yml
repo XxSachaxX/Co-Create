@@ -143,6 +143,8 @@ en:
         owner_badge: "Owner"
         joined_on: "Joined on %{date}"
         no_members: "No members yet."
+        revoke_member: "Revoke"
+        revoke_confirm: "Are you sure you want to revoke this member's access?"
       user_projects:
         back: "Back to all projects"
         user_projects: "%{username}'s Projects"
@@ -174,3 +176,6 @@ en:
         description_placeholder: "Tell the project owner why you'd like to join..."
         send_request: "Send Request"
         cancel: "Cancel"
+  project_memberships:
+    controller:
+      revocation_successful: "Membership revoked successfully."
