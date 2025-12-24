@@ -15,6 +15,8 @@ module CoCreate
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    # Configuration needed for Zeitwerk to treat app/errors/ as a "collapsed" directory where files don't create a namespace
+    config.autoload_paths << Rails.root.join("app/errors")
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :string
