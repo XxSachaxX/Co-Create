@@ -1,6 +1,6 @@
 class ProjectMembershipRequest < ApplicationRecord
   include Uuidable
-  scope :pending, -> { where(status: ProjectMembership::PENDING) }
+  scope :pending, -> { where(status: PENDING) }
 
   belongs_to :project
   belongs_to :user

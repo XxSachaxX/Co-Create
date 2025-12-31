@@ -4,7 +4,7 @@ RSpec.describe Project, type: :model do
   describe "requested_membership?" do
     let!(:user) { FactoryBot.create(:user) }
     let!(:project) { FactoryBot.create(:project) }
-    let!(:owner_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: "active", role: "owner") }
+    let!(:owner_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: ProjectMembership::ACTIVE, role: ProjectMembership::OWNER) }
 
     describe "when the user has a pending membership request" do
       let!(:wannabe_collaborator) { FactoryBot.create(:user) }
@@ -19,6 +19,39 @@ RSpec.describe Project, type: :model do
     describe "when the user does not have a pending membership request" do
       it "returns false if the user does not have a pending membership request" do
         expect(project.requested_membership?(user)).to be false
+      end
+    end
+  end
+
+  describe "collaborator?" do
+    let!(:owner) { FactoryBot.create(:user) }
+    let!(:project) { FactoryBot.create(:project) }
+    let!(:owner_membership) { FactoryBot.create(:project_membership, project: project, user: owner, status: ProjectMembership::ACTIVE, role: ProjectMembership::OWNER) }
+
+    describe "when the user has not project membership" do
+      let!(:user) { FactoryBot.create(:user) }
+
+      it "returns false" do
+        expect(project.collaborator?(user)).to be false
+      end
+    end
+
+    describe "when the user has a pending membership request" do
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:pending_membership) { FactoryBot.create(:project_membership_request, project: project, user: user, status: ProjectMembershipRequest::PENDING) }
+
+      it "returns false" do
+        expect(project.collaborator?(user)).to be false
+      end
+    end
+
+    describe "when the user has a revoked project membership" do
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:project) { FactoryBot.create(:project) }
+      let!(:revoked_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: ProjectMembership::REVOKED, role: ProjectMembership::MEMBER) }
+
+      it "returns false" do
+        expect(project.collaborator?(user)).to be false
       end
     end
   end

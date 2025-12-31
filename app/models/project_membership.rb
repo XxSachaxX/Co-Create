@@ -4,7 +4,6 @@ class ProjectMembership < ApplicationRecord
   belongs_to :user
 
   STATUSES = [
-    PENDING = "pending",
     ACTIVE = "active",
     REVOKED = "revoked"
   ]
