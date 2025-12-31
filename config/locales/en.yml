@@ -179,3 +179,7 @@ en:
   project_memberships:
     controller:
       revocation_successful: "Membership revoked successfully."
+  shared:
+    confirmation_modal:
+      cancel: "Annuler"
+      confirm: "OK"
