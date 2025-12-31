@@ -3,5 +3,6 @@ FactoryBot.define do
     user { user }
     project { project }
     role { role }
+    created_at { Time.now }
   end
 end

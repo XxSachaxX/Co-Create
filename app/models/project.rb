@@ -18,8 +18,9 @@ class Project < ApplicationRecord
   end
 
   def collaborator?(user)
-    return false if requested_membership?(user)
+    return true if active_membership?(user)
     return false if revoked_membership?(user)
+    return false if requested_membership?(user)
 
     users.include?(user) && !owner?(user)
   end
@@ -30,6 +31,10 @@ class Project < ApplicationRecord
 
   def revoked_membership?(user)
     project_memberships.find_by(user: user, status: ProjectMembership::REVOKED).present?
+  end
+
+  def active_membership?(user)
+    project_memberships.find_by(user: user, status: ProjectMembership::ACTIVE).present?
   end
 
   def create_membership!(user)

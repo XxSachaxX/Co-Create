@@ -54,5 +54,32 @@ RSpec.describe Project, type: :model do
         expect(project.collaborator?(user)).to be false
       end
     end
+
+    describe "when the user has an active project membership" do
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:project) { FactoryBot.create(:project) }
+      let!(:active_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: ProjectMembership::ACTIVE, role: ProjectMembership::MEMBER) }
+
+      it "returns true" do
+        expect(project.collaborator?(user)).to be true
+      end
+    end
+
+    describe "when the user has both an active and revoked project membership" do
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:project) { FactoryBot.create(:project) }
+      let!(:active_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: ProjectMembership::ACTIVE, role: ProjectMembership::MEMBER) }
+
+      describe "when the user has both an active and revoked project membership" do
+        describe "when the active membership is newer than the revoked one" do
+          let!(:active_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: ProjectMembership::ACTIVE, role: ProjectMembership::MEMBER) }
+          let!(:revoked_membership) { FactoryBot.create(:project_membership, project: project, user: user, status: ProjectMembership::REVOKED, role: ProjectMembership::MEMBER, created_at: 2.days.ago) }
+
+          it "returns true" do
+            expect(project.collaborator?(user)).to be true
+          end
+        end
+      end
+    end
   end
 end
