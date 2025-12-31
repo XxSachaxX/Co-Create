@@ -5,11 +5,16 @@ class ProjectMembership < ApplicationRecord
 
   STATUSES = [
     PENDING = "pending",
-    ACTIVE = "active"
+    ACTIVE = "active",
+    REVOKED = "revoked"
   ]
 
   ROLES =  [
     OWNER = "owner",
     MEMBER = "member"
   ]
+
+  def revoke!
+    update(status: REVOKED)
+  end
 end
