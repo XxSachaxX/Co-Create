@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
   def user_projects
     @user = User.find(params[:user_id])
     authorize @user, :user_projects?
-    @projects = @user.projects.includes(:project_membership_requests)
+    @projects = @user.projects.includes(:project_membership_requests).where(project_memberships: { status: ProjectMembership::ACTIVE })
     render :user_projects
   end
 
