@@ -31,7 +31,7 @@ RSpec.describe ProjectMembershipRequestsController, type: :request do
     end
 
     describe "when user already has a membership" do
-      let!(:membership) { FactoryBot.create(:project_membership, user: user, project: project, role: "member") }
+      let!(:membership) { FactoryBot.create(:project_membership, user: user, project: project, role: "member", status: ProjectMembership::ACTIVE) }
 
       it 'does not create a new project membership request' do
         expect { post project_membership_requests_path(project_id: project.id) }.not_to change { ProjectMembershipRequest.count }

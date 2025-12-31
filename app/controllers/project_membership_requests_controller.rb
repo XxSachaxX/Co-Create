@@ -8,7 +8,7 @@ class ProjectMembershipRequestsController < ApplicationController
       return
     end
 
-    if ProjectMembership.exists?(user: Current.user, project: project)
+    if ProjectMembership.exists?(user: Current.user, project: project, status: ProjectMembership::ACTIVE)
       flash[:error] = I18n.t("project_membership_requests.controller.already_a_member")
       redirect_to project_path(project)
       return
