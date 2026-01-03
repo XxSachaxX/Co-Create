@@ -1,4 +1,55 @@
 en:
+  landing:
+    views:
+      index:
+        hero:
+          eyebrow: "The simple way to find collaborators"
+          headline_part1: "Stop working on projects"
+          headline_highlight: "alone"
+          headline_part2: ""
+          subheadline: "Connect with passionate people who share your interests. Whether you're building an app, creating a board game, or launching a local initiative—find your team and make it happen."
+          primary_cta: "Start for Free"
+          secondary_cta: "Sign In"
+          trust_free: "Always free"
+          trust_simple: "Simple to use"
+          trust_projects: "All types of projects"
+        how_it_works:
+          title: "How It Works"
+          subtitle: "Three simple steps to start building together"
+          step1_title: "Create or Discover"
+          step1_description: "Share your project idea or browse what others are working on. From tech startups to board games, community events to creative ventures—all projects welcome."
+          step2_title: "Connect & Collaborate"
+          step2_description: "Request to join exciting projects or welcome collaborators to yours. Build your team with people who bring diverse skills and shared passion."
+          step3_title: "Build Together"
+          step3_description: "Work alongside motivated teammates who care as much as you do. Turn ideas into reality with the support of your co-creators."
+        problem:
+          label: "The Problem"
+          title: "Finding collaborators is harder than it should be"
+          point1: "Great ideas die alone because you can't find the right people to work with"
+          point2: "Social networks aren't built for project collaboration—they're for sharing, not building"
+          point3: "You waste time searching forums, Discord servers, and random communities with no clear way to connect"
+        solution:
+          label: "The Solution"
+          title: "Co-Create makes it simple"
+          point1: "One dedicated place to find projects and collaborators across all domains"
+          point2: "Clear project listings with easy request-to-join workflow"
+          point3: "Built specifically for makers, creators, and builders—not just socializing"
+        project_types:
+          title: "Any Project, Any Passion"
+          subtitle: "Co-Create welcomes all kinds of collaborative projects. Whatever you're building, there's a place for it here."
+          tech_title: "Tech & Apps"
+          tech_description: "Web apps, mobile apps, open source tools, SaaS ideas, automation projects, and software experiments."
+          creative_title: "Creative Projects"
+          creative_description: "Board games, card games, podcasts, YouTube channels, art installations, music collaborations, and writing projects."
+          community_title: "Community & Local"
+          community_description: "Neighborhood initiatives, environmental projects, local events, volunteer programs, and social impact ventures."
+          games_title: "Games & Entertainment"
+          games_description: "Tabletop RPGs, indie video games, game mods, interactive experiences, and entertainment ventures."
+        final_cta:
+          title: "Ready to Build Something Amazing?"
+          subtitle: "Join creators, makers, and builders who are turning ideas into reality together."
+          button: "Get Started for Free"
+          no_credit_card: "No credit card required. Start collaborating today."
   sessions:
     controller:
       errors:

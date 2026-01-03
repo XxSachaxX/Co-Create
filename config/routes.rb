@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  root "projects#index"
-  get "/" => "sessions#new", as: :home
+  root "landing#index"
+  get "/projects" => "projects#index", as: :projects_home
   resource :session
   resources :users, only: [ :new, :create ] do
     resources :projects, only: [ :new, :create, :edit, :update, :destroy ]
