@@ -14,10 +14,8 @@
     <h1 class="text-4xl font-bold text-charcoal mb-2"><%= t('static_pages.views.privacy.title') %></h1>
     <p class="text-sm text-charcoal-500 mb-8"><%= t('static_pages.views.privacy.last_updated') %></p>
 
-    <div class="prose prose-charcoal max-w-none">
-      <p class="text-charcoal-600 leading-relaxed">
-        <%= t('static_pages.views.privacy.placeholder_content') %>
-      </p>
+    <div class="prose prose-charcoal max-w-none space-y-6">
+      <%= raw t('static_pages.views.privacy.content_html') %>
     </div>
   </div>
 </div>
