@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :project_memberships, dependent: :destroy
   has_many :users, through: :project_memberships
   has_many :project_membership_requests, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   accepts_nested_attributes_for :project_memberships
 
