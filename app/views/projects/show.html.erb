@@ -36,27 +36,145 @@
     <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-mustard/20 rounded-full blur-2xl"></div>
   </div>
 
-  <!-- Project Content -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Main Content -->
-    <div class="lg:col-span-2">
-      <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
-        <!-- Gradient accent bar -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+  <!-- Tabs Navigation -->
+  <div class="mb-8" data-controller="tabs" data-tabs-default-tab-value="details">
+    <div class="border-b border-charcoal-200 mb-6">
+      <nav class="-mb-px flex space-x-8 overflow-x-auto" aria-label="Tabs">
+        <button
+          data-tabs-target="tab"
+          data-tab-name="details"
+          data-action="click->tabs#switch"
+          class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 border-transparent text-charcoal-400 hover:text-charcoal-600"
+        >
+          <%= I18n.t('projects.views.show.tab_details') %>
+        </button>
 
-        <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.description') %></h2>
-        <div class="text-charcoal-500 leading-relaxed">
-          <% if @project.description.present? %>
-            <p class="whitespace-pre-wrap break-words"><%= @project.description %></p>
-          <% else %>
-            <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_description') %></p>
-          <% end %>
+        <button
+          data-tabs-target="tab"
+          data-tab-name="description"
+          data-action="click->tabs#switch"
+          class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 border-transparent text-charcoal-400 hover:text-charcoal-600"
+        >
+          <%= I18n.t('projects.views.show.tab_description') %>
+        </button>
+
+        <% if @project.owner?(@user) %>
+          <button
+            data-tabs-target="tab"
+            data-tab-name="requests"
+            data-action="click->tabs#switch"
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 border-transparent text-charcoal-400 hover:text-charcoal-600"
+          >
+            <%= I18n.t('projects.views.show.tab_pending_requests') %>
+            <% if @project.project_membership_requests.pending.any? %>
+              <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-lavender-100 text-lavender-700">
+                <%= @project.project_membership_requests.pending.count %>
+              </span>
+            <% end %>
+          </button>
+        <% end %>
+
+        <button
+          data-tabs-target="tab"
+          data-tab-name="members"
+          data-action="click->tabs#switch"
+          class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 border-transparent text-charcoal-400 hover:text-charcoal-600"
+        >
+          <%= I18n.t('projects.views.show.tab_members') %>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Tab Panels -->
+
+    <!-- Project Details Tab -->
+    <div data-tabs-target="panel" data-tab-panel="details" class="hidden">
+      <div class="max-w-2xl">
+        <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
+          <!-- Gradient accent bar -->
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+
+          <h2 class="text-lg font-bold text-charcoal mb-6"><%= I18n.t('projects.views.show.project_details') %></h2>
+
+          <div class="space-y-4">
+            <div>
+              <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.owner') %></span>
+              <div class="flex items-center gap-2 mt-1">
+                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
+                  <span class="text-white text-xs font-medium"><%= @project.owner.name.first.upcase %></span>
+                </div>
+                <span class="text-sm text-charcoal-600"><%= @project.owner.name %></span>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.created') %></span>
+              <p class="text-sm text-charcoal-600 mt-1"><%= @project.created_at.strftime("%B %d, %Y") %></p>
+            </div>
+
+            <div>
+              <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.last_updated') %></span>
+              <p class="text-sm text-charcoal-600 mt-1"><%= @project.updated_at.strftime("%B %d, %Y") %></p>
+            </div>
+
+            <div class="pt-4 border-t border-charcoal-200">
+              <% if @project.owner?(@user) %>
+                <div class="flex gap-2">
+                  <%= render 'shared/button_link',
+                      text: I18n.t('projects.views.show.edit'),
+                      path: edit_user_project_path(@user, @project),
+                      variant: :secondary %>
+                  <%= render 'shared/button_link',
+                      text: I18n.t('projects.views.show.delete'),
+                      path: user_project_path(@user, @project),
+                      variant: :danger,
+                      http_method: :delete,
+                      confirm: I18n.t('projects.views.show.delete_confirm') %>
+                </div>
+              <% elsif @project.requested_membership?(@user) %>
+                <p class="text-sm text-charcoal-600 mt-1"><%= I18n.t('projects.views.show.awaiting_validation') %></p>
+              <% elsif @project.collaborator?(@user) %>
+                <%= render 'shared/button_link',
+                    text: I18n.t('projects.views.show.leave_project'),
+                    path: leave_project_path(@project),
+                    variant: :danger,
+                    http_method: :post,
+                    confirm: I18n.t('projects.views.show.leave_confirm') %>
+              <% else %>
+                <%= render 'shared/button_link',
+                    text: I18n.t('projects.views.show.request_to_join'),
+                    path: new_project_membership_request_path(project_id: @project.id),
+                    variant: :primary %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- Description Tab -->
+    <div data-tabs-target="panel" data-tab-panel="description" class="hidden">
+      <div class="max-w-4xl">
+        <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
+          <!-- Gradient accent bar -->
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+
+          <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.description') %></h2>
+          <div class="text-charcoal-500 leading-relaxed">
+            <% if @project.description.present? %>
+              <p class="whitespace-pre-wrap break-words"><%= @project.description %></p>
+            <% else %>
+              <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_description') %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Requests Tab (Owner Only) -->
     <% if @project.owner?(@user) %>
-        <div class="lg:col-span-2">
+      <div data-tabs-target="panel" data-tab-panel="requests" class="hidden">
+        <div class="max-w-4xl">
           <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
             <!-- Gradient accent bar -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
@@ -117,117 +235,58 @@
             </div>
           </div>
         </div>
+      </div>
     <% end %>
 
-    <!-- Members Section -->
-    <div class="lg:col-span-2">
-      <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
-        <!-- Gradient accent bar -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+    <!-- Members Tab -->
+    <div data-tabs-target="panel" data-tab-panel="members" class="hidden">
+      <div class="max-w-4xl">
+        <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
+          <!-- Gradient accent bar -->
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
 
-        <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.members') %></h2>
-        <div class="leading-relaxed">
-          <% active_memberships = @project.project_memberships.where(status: ProjectMembership::ACTIVE).includes(:user).order(created_at: :asc) %>
-          <% if active_memberships.any? %>
-            <div class="space-y-3">
-              <% active_memberships.each do |membership| %>
-                <div class="border border-charcoal-200 rounded-lg p-4 bg-white hover:shadow-md hover:border-charcoal-300 transition-all duration-200">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
-                        <span class="text-white text-sm font-medium"><%= membership.user.name.first.upcase %></span>
-                      </div>
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <span class="font-semibold text-charcoal"><%= membership.user.name %></span>
-                          <% if membership.role == ProjectMembership::OWNER %>
-                            <span class="inline-flex items-center px-2 py-0.5 bg-lavender-100 text-lavender-700 text-xs font-medium rounded-full">
-                              <%= I18n.t('projects.views.show.owner_badge') %>
-                            </span>
-                          <% end %>
+          <h2 class="text-lg font-bold text-charcoal mb-4"><%= I18n.t('projects.views.show.members') %></h2>
+          <div class="leading-relaxed">
+            <% active_memberships = @project.project_memberships.where(status: ProjectMembership::ACTIVE).includes(:user).order(created_at: :asc) %>
+            <% if active_memberships.any? %>
+              <div class="space-y-3">
+                <% active_memberships.each do |membership| %>
+                  <div class="border border-charcoal-200 rounded-lg p-4 bg-white hover:shadow-md hover:border-charcoal-300 transition-all duration-200">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
+                          <span class="text-white text-sm font-medium"><%= membership.user.name.first.upcase %></span>
                         </div>
-                        <span class="text-xs text-charcoal-500"><%= I18n.t('projects.views.show.joined_on', date: membership.created_at.strftime('%B %d, %Y')) %></span>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="font-semibold text-charcoal"><%= membership.user.name %></span>
+                            <% if membership.role == ProjectMembership::OWNER %>
+                              <span class="inline-flex items-center px-2 py-0.5 bg-lavender-100 text-lavender-700 text-xs font-medium rounded-full">
+                                <%= I18n.t('projects.views.show.owner_badge') %>
+                              </span>
+                            <% end %>
+                          </div>
+                          <span class="text-xs text-charcoal-500"><%= I18n.t('projects.views.show.joined_on', date: membership.created_at.strftime('%B %d, %Y')) %></span>
+                        </div>
                       </div>
+                      <% if @project.owner?(@user) && membership.role != ProjectMembership::OWNER %>
+                        <div>
+                          <%= render 'shared/button_link',
+                              text: I18n.t('projects.views.show.revoke_member'),
+                              path: revoke_project_membership_path(membership),
+                              variant: :danger,
+                              http_method: :post,
+                              confirm: I18n.t('projects.views.show.revoke_confirm') %>
+                        </div>
+                      <% end %>
                     </div>
-                    <% if @project.owner?(@user) && membership.role != ProjectMembership::OWNER %>
-                      <div>
-                        <%= render 'shared/button_link',
-                            text: I18n.t('projects.views.show.revoke_member'),
-                            path: revoke_project_membership_path(membership),
-                            variant: :danger,
-                            http_method: :post,
-                            confirm: I18n.t('projects.views.show.revoke_confirm') %>
-                      </div>
-                    <% end %>
                   </div>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_members') %></p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="lg:col-span-1 space-y-6">
-      <!-- Project Info Card -->
-      <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
-        <!-- Gradient accent bar -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
-
-        <h3 class="text-sm font-bold text-charcoal mb-4 uppercase tracking-wide"><%= I18n.t('projects.views.show.project_details') %></h3>
-
-        <div class="space-y-4">
-          <div>
-            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.owner') %></span>
-            <div class="flex items-center gap-2 mt-1">
-              <div class="w-6 h-6 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
-                <span class="text-white text-xs font-medium"><%= @project.owner.name.first.upcase %></span>
+                <% end %>
               </div>
-              <span class="text-sm text-charcoal-600"><%= @project.owner.name %></span>
-            </div>
+            <% else %>
+              <p class="italic text-charcoal-400"><%= I18n.t('projects.views.show.no_members') %></p>
+            <% end %>
           </div>
-
-          <div>
-            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.created') %></span>
-            <p class="text-sm text-charcoal-600 mt-1"><%= @project.created_at.strftime("%B %d, %Y") %></p>
-          </div>
-
-          <div>
-            <span class="text-xs text-charcoal-400 uppercase tracking-wide"><%= I18n.t('projects.views.show.last_updated') %></span>
-            <p class="text-sm text-charcoal-600 mt-1"><%= @project.updated_at.strftime("%B %d, %Y") %></p>
-          </div>
-
-          <% if @project.owner?(@user) %>
-            <div class="flex gap-2">
-              <%= render 'shared/button_link',
-                  text: I18n.t('projects.views.show.delete'),
-                  path: user_project_path(@user, @project),
-                  variant: :danger,
-                  http_method: :delete,
-                  confirm: I18n.t('projects.views.show.delete_confirm') %>
-              <%= render 'shared/button_link',
-                  text: I18n.t('projects.views.show.edit'),
-                  path: edit_user_project_path(@user, @project),
-                  variant: :secondary %>
-            </div>
-          <% elsif @project.requested_membership?(@user) %>
-              <p class="text-sm text-charcoal-600 mt-1"><%= I18n.t('projects.views.show.awaiting_validation') %></p>
-          <% elsif @project.collaborator?(@user) %>
-              <%= render 'shared/button_link',
-                  text: I18n.t('projects.views.show.leave_project'),
-                  path: leave_project_path(@project),
-                  variant: :danger,
-                  http_method: :post,
-                  confirm: I18n.t('projects.views.show.leave_confirm') %>
-          <% else %>
-          <%= render 'shared/button_link',
-              text: I18n.t('projects.views.show.request_to_join'),
-              path: new_project_membership_request_path(project_id: @project.id),
-              variant: :primary %>
-          <% end %>
         </div>
       </div>
     </div>
