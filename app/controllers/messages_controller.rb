@@ -11,14 +11,14 @@ class MessagesController < ApplicationController
   def create
     @message = @project.messages.new(user: Current.user, **message_params)
 
-    if @message.save
-      @messages = @project.messages.includes(:user).order(created_at: :asc)
+    if @message.save!
+      @messages = @project.messages.from_most_recent
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to project_path(@project), notice: I18n.t("messages.controller.message_sent") }
       end
     else
-      @messages = @project.messages.includes(:user).order(created_at: :asc)
+      @messages = @project.messages.from_most_recent
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace("messages_section", partial: "messages/messages_section", locals: { project: @project, messages: @messages }) }
         format.html { redirect_to project_path(@project), alert: I18n.t("messages.controller.message_failed") }
