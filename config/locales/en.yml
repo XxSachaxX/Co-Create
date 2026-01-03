@@ -53,6 +53,10 @@ en:
       log_out: "Log out"
       sign_in: "Sign in"
       sign_up: "Sign up"
+    footer:
+      terms_of_service: "Terms of Service"
+      privacy_policy: "Privacy Policy"
+      copyright: "© %{year} Co-Create. All rights reserved."
   users:
     controller:
       account_created: "Account created successfully!"
@@ -198,3 +202,15 @@ en:
     confirmation_modal:
       cancel: "Annuler"
       confirm: "OK"
+  static_pages:
+    views:
+      terms:
+        back: "Back"
+        title: "Terms of Service"
+        last_updated: "Last updated: Coming soon"
+        placeholder_content: "Terms of Service content will be added here. This page is currently under construction."
+      privacy:
+        back: "Back"
+        title: "Privacy Policy"
+        last_updated: "Last updated: Coming soon"
+        placeholder_content: "Privacy Policy content will be added here. This page is currently under construction."

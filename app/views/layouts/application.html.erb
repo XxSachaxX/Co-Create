@@ -85,7 +85,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-lavender-50 min-h-screen" data-controller="turbo-confirm">
+  <body class="bg-lavender-50 min-h-screen flex flex-col" data-controller="turbo-confirm">
     <%= render "layouts/header" %>
 
     <% if flash.any? %>
@@ -103,10 +103,11 @@
       </div>
     <% end %>
 
-    <main class="container mx-auto <%= flash.any? ? 'mt-4' : 'mt-28' %> px-5 flex">
+    <main class="container mx-auto <%= flash.any? ? 'mt-4' : 'mt-28' %> px-5 flex flex-grow mb-12">
       <%= yield %>
     </main>
 
+    <%= render "layouts/footer" %>
     <%= render "shared/confirmation_modal" %>
   </body>
 </html>

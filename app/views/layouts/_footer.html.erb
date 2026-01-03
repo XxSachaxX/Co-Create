@@ -1,0 +1,20 @@
+<footer class="bg-white/80 backdrop-blur-md border-t border-charcoal-100 shadow-sm mt-auto">
+  <!-- Subtle gradient accent line -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-lavender-200 to-mustard-200"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <!-- Footer Links -->
+      <nav class="flex items-center gap-6">
+        <%= link_to t('layouts.footer.terms_of_service'), terms_path, class: "text-sm font-medium text-lavender-700 hover:text-lavender-500 transition-colors duration-200" %>
+        <span class="text-charcoal-200">•</span>
+        <%= link_to t('layouts.footer.privacy_policy'), privacy_path, class: "text-sm font-medium text-lavender-700 hover:text-lavender-500 transition-colors duration-200" %>
+      </nav>
+
+      <!-- Copyright -->
+      <div class="text-sm text-charcoal-400">
+        <%= t('layouts.footer.copyright', year: Time.current.year) %>
+      </div>
+    </div>
+  </div>
+</footer>
