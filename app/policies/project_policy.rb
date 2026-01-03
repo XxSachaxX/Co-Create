@@ -17,4 +17,8 @@ class ProjectPolicy < ApplicationPolicy
   def update?
     project.owner?(user)
   end
+
+  def member?
+    project.active_membership?(user)
+  end
 end

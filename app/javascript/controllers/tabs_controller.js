@@ -32,6 +32,16 @@ export default class extends Controller {
     const selectedPanel = this.panelTargets.find(panel => panel.dataset.tabPanel === tabName)
     if (selectedPanel) {
       selectedPanel.classList.remove("hidden")
+
+      // Auto-scroll to bottom of messages when Discussion tab is opened
+      if (tabName === "discussion") {
+        const messagesContainer = selectedPanel.querySelector("#messages")
+        if (messagesContainer) {
+          setTimeout(() => {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight
+          }, 100)
+        }
+      }
     }
 
     // Activate selected tab

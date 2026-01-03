@@ -1,0 +1,28 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-6">
+      <%= link_to project_path(@project), class: "inline-flex items-center gap-2 text-charcoal-500 hover:text-lavender-700 transition-colors duration-200" do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span class="text-sm font-medium"><%= I18n.t('projects.views.show.back') %></span>
+      <% end %>
+    </div>
+
+    <div class="relative bg-white rounded-2xl shadow-md border border-charcoal-100 p-6 overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lavender via-lavender-400 to-mustard"></div>
+
+      <h2 class="text-lg font-bold text-charcoal mb-6"><%= I18n.t('messages.views.index.discussion_title') %></h2>
+
+      <div id="messages" class="space-y-4 mb-6">
+        <% if @messages.any? %>
+          <%= render @messages %>
+        <% else %>
+          <p class="text-center text-charcoal-400 italic py-8"><%= I18n.t('messages.views.index.no_messages') %></p>
+        <% end %>
+      </div>
+
+      <%= render 'messages/form' %>
+    </div>
+  </div>
+</div>

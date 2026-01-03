@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "messages_section" do %>
+  <%= render "messages/messages_section", project: @project, messages: @messages %>
+<% end %>

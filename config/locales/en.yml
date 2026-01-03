@@ -119,6 +119,7 @@ en:
         tab_description: "Description"
         tab_pending_requests: "Pending Requests"
         tab_members: "Members"
+        tab_discussion: "Discussion"
         description: "Description"
         no_description: "No description provided yet."
         pending_requests: "Pending membership requests"
@@ -183,6 +184,16 @@ en:
   project_memberships:
     controller:
       revocation_successful: "Membership revoked successfully."
+  messages:
+    controller:
+      message_sent: "Message sent successfully."
+      message_failed: "Failed to send message. Please try again."
+    views:
+      index:
+        discussion_title: "Discussion"
+        no_messages: "No messages yet. Start the conversation!"
+        message_placeholder: "Write a message..."
+        send_button: "Send"
   shared:
     confirmation_modal:
       cancel: "Annuler"

@@ -1,0 +1,16 @@
+<div class="mt-6 pt-6 border-t border-charcoal-200">
+  <%= form_with model: [@project, @message], local: true, class: "space-y-3" do |f| %>
+    <div>
+      <%= f.text_area :content,
+          placeholder: I18n.t('messages.views.index.message_placeholder'),
+          rows: 3,
+          class: "w-full px-4 py-3 border border-charcoal-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lavender-500 focus:border-transparent text-charcoal resize-none",
+          required: true %>
+    </div>
+
+    <div class="flex justify-end">
+      <%= f.submit I18n.t('messages.views.index.send_button'),
+          class: "inline-flex items-center px-6 py-2 bg-gradient-to-r from-lavender to-lavender-600 text-white text-sm font-medium rounded-lg hover:from-lavender-600 hover:to-lavender-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lavender-500 transition-all duration-200 shadow-sm hover:shadow-md" %>
+    </div>
+  <% end %>
+</div>

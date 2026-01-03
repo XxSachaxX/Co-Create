@@ -1,0 +1,22 @@
+<div class="flex gap-3 mb-4">
+  <div class="flex-shrink-0">
+    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-lavender to-mustard flex items-center justify-center">
+      <span class="text-white text-xs font-medium"><%= message.user.name.first.upcase %></span>
+    </div>
+  </div>
+  <div class="flex-1 min-w-0">
+    <div class="flex items-baseline gap-2 mb-1">
+      <span class="font-semibold text-charcoal text-sm"><%= message.user.name %></span>
+      <span class="text-xs text-charcoal-400">
+        <% if message.created_at.to_date == Date.today %>
+          Today at <%= message.created_at.strftime("%l:%M %p") %>
+        <% elsif message.created_at.to_date == Date.yesterday %>
+          Yesterday at <%= message.created_at.strftime("%l:%M %p") %>
+        <% else %>
+          <%= message.created_at.strftime("%b %d at %l:%M %p") %>
+        <% end %>
+      </span>
+    </div>
+    <div class="text-charcoal-600 text-sm break-words whitespace-pre-wrap"><%= message.content %></div>
+  </div>
+</div>

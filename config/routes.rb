@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get "projects(/:user_id)", to: "projects#user_projects", as: :user_projects
   end
   resources :projects, except: [ :new, :create, :edit, :update, :destroy ] do
+    resources :messages, only: [ :index, :create ]
     member do
       post :join, to: "projects#join"
       post :leave, to: "projects#leave"
