@@ -141,6 +141,10 @@ en:
       update_successful: "Project updated successfully!"
       successfully_left: "You have left the project."
     views:
+      form:
+        tags_label: "Tags"
+        tags_placeholder: "e.g., rails, saas, education"
+        tags_hint: "Add up to 10 tags separated by commas"
       edit:
         update_information: "Update your project's information"
         enter_name: "Enter your project's name"
@@ -158,6 +162,9 @@ en:
         view: "View"
         no_projects_message: "No projects yet. Create your first project!"
         get_started: "Get started"
+        filter_by_tags: "Filter by tags"
+        filter_placeholder: "Search tags..."
+        no_tags_found: "No tags found"
       new:
         create_project: "Create a new project"
         name: "Project name"
