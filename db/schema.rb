@@ -43,9 +43,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
     t.index ["user_id"], name: "index_project_memberships_on_user_id"
   end
 
-# Could not dump table "project_tags" because of following StandardError
-#   Unknown type 'uuid' for column 'id'
-
+  create_table "project_tags", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "project_id", null: false
+    t.string "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "tag_id"], name: "index_project_tags_on_project_id_and_tag_id"
+    t.index ["project_id"], name: "index_project_tags_on_project_id"
+    t.index ["tag_id", "project_id"], name: "index_project_tags_on_tag_id_and_project_id", unique: true
+    t.index ["tag_id"], name: "index_project_tags_on_tag_id"
+  end
 
   create_table "projects", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -63,9 +70,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-# Could not dump table "tags" because of following StandardError
-#   Unknown type 'uuid' for column 'id'
-
+  create_table "tags", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.integer "projects_count", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
 
   create_table "users", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false

@@ -1,8 +1,8 @@
 class CreateProjectTags < ActiveRecord::Migration[8.1]
   def change
-    create_table :project_tags, id: :uuid do |t|
-      t.references :tag, type: :uuid, null: false, foreign_key: true
-      t.references :project, type: :uuid, null: false, foreign_key: true
+    create_table :project_tags, id: :string do |t|
+      t.references :tag, type: :string, null: false, foreign_key: true
+      t.references :project, type: :string, null: false, foreign_key: true
       t.timestamps
     end
 
