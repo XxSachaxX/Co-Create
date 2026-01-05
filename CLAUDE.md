@@ -88,12 +88,21 @@ Pundit policies control access:
   - `owner?(user)` - Check if user is the owner
   - `collaborator?(user)` - Check if user is a collaborator (not owner)
   - `requested_membership?(user)` - Check if user has pending membership request
+  - `tag_list` - Returns array of tag names
+  - `tag_list=(names)` - Set tags from array of names
+  - `tag_names` - Returns comma-separated string of tag names
+  - `tag_names=(string)` - Set tags from comma-separated string
   - Minimum description length: 50 characters
 - **ProjectMembership**: Join table with role (owner/member) and status (pending/active)
   - Roles: `OWNER`, `MEMBER`
   - Statuses: `PENDING`, `ACTIVE`
 - **ProjectMembershipRequest**: Users request to join projects, owners approve/reject
 - **Session**: Database-backed sessions with user_agent and ip_address
+- **Tag**: Has many projects through project_tags
+  - Names are automatically normalized (lowercase, hyphens instead of spaces)
+  - Tracks usage count via counter cache (projects_count)
+  - Scopes: `popular` (by usage), `alphabetical`, `search(query)`
+- **ProjectTag**: Join table between projects and tags with counter cache
 
 **Concerns:**
 - **Uuidable** (app/models/concerns/uuidable.rb): Automatically generates UUID as primary key on create (used by User, Project, ProjectMembership)
@@ -108,6 +117,8 @@ Key route patterns in config/routes.rb:
   - POST `/projects/:id/join` - Join public project
   - POST `/projects/:id/leave` - Leave project
   - `/project_membership_requests` - Request to join, owner accepts/rejects
+- Tag management:
+  - GET `/tags` - List tags with search and filtering (JSON/Turbo Stream)
 
 ### Frontend Stack
 
