@@ -1,0 +1,17 @@
+<%
+  removable ||= false
+  link ||= false
+%>
+
+<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-lavender-100 text-lavender-800">
+  <%= tag.name %>
+
+  <% if removable %>
+    <button type="button"
+            data-action="click->tag-input#removeTag"
+            data-tag-name="<%= tag.name %>"
+            class="ml-2 text-lavender-600 hover:text-lavender-800 font-bold">
+      ×
+    </button>
+  <% end %>
+</span>

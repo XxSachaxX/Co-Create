@@ -1,0 +1,21 @@
+<%= form_with url: projects_home_path, method: :get, data: { turbo_frame: 'projects' } do |f| %>
+  <div class="divide-y divide-charcoal-100">
+    <% if tags.any? %>
+      <% tags.each do |tag| %>
+        <label class="flex items-center px-4 py-2 hover:bg-charcoal-50 cursor-pointer transition">
+          <%= check_box_tag 'tags[]', tag.name,
+                selected_tags.include?(tag.name),
+                id: "tag_#{tag.id}",
+                data: { action: 'change->tag-filter#submit' },
+                class: 'rounded border-charcoal-300 text-lavender focus:ring-lavender' %>
+          <span class="ml-3 flex-1 text-charcoal-700"><%= tag.name %></span>
+          <span class="text-sm text-charcoal-500">(<%= tag.projects_count %>)</span>
+        </label>
+      <% end %>
+    <% else %>
+      <div class="px-4 py-3 text-center text-sm text-charcoal-500">
+        <%= I18n.t('projects.views.index.no_tags_found') %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

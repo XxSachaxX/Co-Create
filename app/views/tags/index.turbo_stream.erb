@@ -1,0 +1,3 @@
+<%= turbo_stream.replace 'tag_list' do %>
+  <%= render 'tags/filter_list', tags: @tags, selected_tags: params[:selected] || [] %>
+<% end %>
