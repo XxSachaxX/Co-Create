@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
   before_action :set_project
-  before_action :set_user
   before_action :authorize_project_member
 
   def index
@@ -30,10 +29,6 @@ class MessagesController < ApplicationController
 
   def set_project
     @project = Project.find(params[:project_id])
-  end
-
-  def set_user
-    @user = Current.user
   end
 
   def authorize_project_member

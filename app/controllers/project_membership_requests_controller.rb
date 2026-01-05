@@ -29,9 +29,8 @@ class ProjectMembershipRequestsController < ApplicationController
   end
 
   def new
-    @user = Current.user
     @project = Project.find(params[:project_id])
-    @project_membership_request = @project.project_membership_requests.new(user: @user)
+    @project_membership_request = @project.project_membership_requests.new(user: Current.user)
   end
 
   def accept
