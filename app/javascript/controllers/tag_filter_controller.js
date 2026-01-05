@@ -3,13 +3,38 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["button", "dropdown", "search"]
 
+  connect() {
+    this.close = this.close.bind(this)
+  }
+
   toggle(event) {
     event.stopPropagation()
-    this.dropdownTarget.classList.toggle('hidden')
+    const isHidden = this.dropdownTarget.classList.contains('hidden')
 
-    if (!this.dropdownTarget.classList.contains('hidden')) {
-      this.searchTarget.focus()
+    if (isHidden) {
+      this.open()
+    } else {
+      this.close()
     }
+  }
+
+  open() {
+    this.dropdownTarget.classList.remove('hidden')
+    this.searchTarget.focus()
+    // Add listener on next tick to avoid immediate close
+    setTimeout(() => {
+      document.addEventListener('click', this.close)
+    }, 0)
+  }
+
+  close() {
+    this.dropdownTarget.classList.add('hidden')
+    document.removeEventListener('click', this.close)
+  }
+
+  keepOpen(event) {
+    // Prevent clicks inside dropdown from closing it
+    event.stopPropagation()
   }
 
   submit(event) {
@@ -30,19 +55,7 @@ export default class extends Controller {
       })
   }
 
-  // Close dropdown when clicking outside
-  connect() {
-    this.boundCloseOnClickOutside = this.closeOnClickOutside.bind(this)
-    document.addEventListener('click', this.boundCloseOnClickOutside)
-  }
-
   disconnect() {
-    document.removeEventListener('click', this.boundCloseOnClickOutside)
-  }
-
-  closeOnClickOutside(event) {
-    if (!this.element.contains(event.target)) {
-      this.dropdownTarget.classList.add('hidden')
-    }
+    document.removeEventListener('click', this.close)
   }
 }
