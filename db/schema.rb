@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_03_121329) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
   create_table "messages", id: :string, force: :cascade do |t|
     t.string "content", null: false
     t.datetime "created_at", null: false
@@ -43,6 +43,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_03_121329) do
     t.index ["user_id"], name: "index_project_memberships_on_user_id"
   end
 
+# Could not dump table "project_tags" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
   create_table "projects", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "description"
@@ -59,6 +63,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_03_121329) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+# Could not dump table "tags" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+
   create_table "users", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", null: false
@@ -70,5 +78,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_03_121329) do
 
   add_foreign_key "project_membership_requests", "projects"
   add_foreign_key "project_membership_requests", "users"
+  add_foreign_key "project_tags", "projects"
+  add_foreign_key "project_tags", "tags"
   add_foreign_key "sessions", "users"
 end
