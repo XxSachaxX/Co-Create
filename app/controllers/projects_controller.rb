@@ -1,6 +1,15 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.all
+    @projects = Project.includes(:owner, :tags).order(created_at: :desc)
+
+    # Filter by tags
+    tag_names = Array(params[:tags]).compact_blank
+    @projects = @projects.with_any_tags(tag_names) if tag_names.any?
+
+    # For filter dropdown
+    @available_tags = Tag.popular.limit(50)
+    @selected_tags = tag_names
+
     @user = Current.user
     render :index
   end
@@ -70,7 +79,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :description, :tag_names)
   end
 
   def current_project

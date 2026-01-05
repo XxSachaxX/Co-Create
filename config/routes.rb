@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
   resources :passwords, param: :token
+  resources :tags, only: [ :index ]
 
   # Static pages
   get "terms", to: "static_pages#terms", as: :terms
