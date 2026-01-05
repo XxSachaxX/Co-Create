@@ -113,7 +113,7 @@
   <%= turbo_frame_tag 'projects' do %>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     <% @projects.each do |project| %>
-      <%= link_to project_path(project), class: "group relative bg-gradient-to-br from-white via-white to-lavender-50/50 rounded-2xl shadow-lg border border-charcoal-100/50 p-6 hover:shadow-2xl hover:shadow-lavender/20 hover:-translate-y-2 hover:scale-[1.02] transition-all duration-500 overflow-hidden block" do %>
+      <%= link_to project_path(project), data: { turbo_frame: "_top" }, class: "group relative bg-gradient-to-br from-white via-white to-lavender-50/50 rounded-2xl shadow-lg border border-charcoal-100/50 p-6 hover:shadow-2xl hover:shadow-lavender/20 hover:-translate-y-2 hover:scale-[1.02] transition-all duration-500 overflow-hidden block" do %>
         <!-- Animated gradient accent bar -->
         <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-lavender via-mustard to-lavender-400 bg-[length:200%_100%] group-hover:animate-gradient"></div>
 
