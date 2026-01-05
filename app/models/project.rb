@@ -91,8 +91,11 @@ class Project < ApplicationRecord
   # Accepts comma-separated string: "Rails, SaaS"
   # Used for processing form input
   def tag_names=(string)
-    return if string.blank?
-    self.tag_list = string.split(",")
+    if string.blank?
+      self.tag_list = []
+    else
+      self.tag_list = string.split(",")
+    end
   end
 
   private

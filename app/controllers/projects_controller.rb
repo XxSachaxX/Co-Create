@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.includes(:owner, :tags).order(created_at: :desc)
+    @projects = Project.includes(:tags).order(created_at: :desc)
 
     # Filter by tags
     tag_names = Array(params[:tags]).compact_blank
