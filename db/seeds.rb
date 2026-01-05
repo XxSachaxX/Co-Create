@@ -53,6 +53,31 @@ users.each_with_index do |user, user_index|
 end
 puts "\n  ✓ Created 100 projects"
 
+# Create tags
+puts "\n🏷️  Creating tags..."
+common_tags = %w[
+  rails ruby javascript react vue python
+  saas education healthcare fintech e-commerce
+  mvp prototype beta launched
+  open-source ai machine-learning blockchain
+  mobile web api backend frontend
+]
+
+common_tags.each do |tag_name|
+  Tag.find_or_create_by!(name: tag_name)
+end
+puts "  ✓ Created #{Tag.count} tags"
+
+# Add tags to projects
+puts "\n🏷️  Adding tags to projects..."
+projects.each do |project|
+  # Random 2-5 tags per project
+  tag_names = common_tags.sample(rand(2..5))
+  project.tag_list = tag_names
+  project.save!
+end
+puts "  ✓ Tagged #{projects.count} projects"
+
 # Create cross-memberships (each user joins 5-10 random projects from other users)
 puts "\n🤝 Creating cross-memberships..."
 membership_count = 0
@@ -80,6 +105,7 @@ puts "="*60
 puts "📊 Summary:"
 puts "  • Users created: #{User.count}"
 puts "  • Projects created: #{Project.count}"
+puts "  • Tags created: #{Tag.count}"
 puts "  • Total memberships: #{ProjectMembership.count}"
 puts "    - Owner memberships: #{ProjectMembership.where(role: ProjectMembership::OWNER).count}"
 puts "    - Member memberships: #{ProjectMembership.where(role: ProjectMembership::MEMBER).count}"
