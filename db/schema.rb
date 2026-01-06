@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_06_142108) do
+  create_table "interests", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_interests_on_name", unique: true
+  end
+
   create_table "messages", id: :string, force: :cascade do |t|
     t.string "content", null: false
     t.datetime "created_at", null: false
@@ -19,6 +27,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
     t.string "user_id"
     t.index ["project_id"], name: "index_messages_on_project_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "profile_interests", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "interest_id", null: false
+    t.string "profile_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interest_id"], name: "index_profile_interests_on_interest_id"
+    t.index ["profile_id", "interest_id"], name: "index_profile_interests_on_profile_id_and_interest_id", unique: true
+    t.index ["profile_id"], name: "index_profile_interests_on_profile_id"
+  end
+
+  create_table "profile_skills", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "profile_id", null: false
+    t.string "skill_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id", "skill_id"], name: "index_profile_skills_on_profile_id_and_skill_id", unique: true
+    t.index ["profile_id"], name: "index_profile_skills_on_profile_id"
+    t.index ["skill_id"], name: "index_profile_skills_on_skill_id"
+  end
+
+  create_table "profiles", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.datetime "updated_at", null: false
+    t.string "user_id", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "project_membership_requests", id: :string, force: :cascade do |t|
@@ -70,6 +106,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "skills", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_skills_on_name", unique: true
+  end
+
   create_table "tags", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -87,6 +131,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_132545) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "profile_interests", "interests"
+  add_foreign_key "profile_interests", "profiles"
+  add_foreign_key "profile_skills", "profiles"
+  add_foreign_key "profile_skills", "skills"
+  add_foreign_key "profiles", "users"
   add_foreign_key "project_membership_requests", "projects"
   add_foreign_key "project_membership_requests", "users"
   add_foreign_key "project_tags", "projects"
