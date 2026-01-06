@@ -104,6 +104,8 @@ en:
       log_out: "Log out"
       sign_in: "Sign in"
       sign_up: "Sign up"
+      menu_aria_label: "Navigation menu"
+      close_menu: "Close menu"
     footer:
       terms_of_service: "Terms of Service"
       privacy_policy: "Privacy Policy"

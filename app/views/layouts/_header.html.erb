@@ -1,4 +1,4 @@
-<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-charcoal-100 shadow-sm">
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-charcoal-100 shadow-sm" data-controller="menu">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
@@ -13,15 +13,70 @@
         <% end %>
       </div>
 
-      <!-- Navigation -->
-      <div class="flex items-center gap-3">
+      <!-- Menu Button -->
+      <button
+        type="button"
+        class="p-2 text-lavender-700 hover:bg-lavender-50 rounded-lg transition-all duration-200"
+        data-menu-target="burger"
+        data-action="click->menu#toggle keydown->menu#handleKeydown"
+        aria-label="<%= I18n.t('layouts.header.menu_aria_label') %>"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dropdown Menu -->
+  <div class="relative">
+    <div
+      class="hidden absolute top-2 right-4 w-64 bg-white rounded-lg shadow-2xl border border-charcoal-100 overflow-hidden"
+      data-menu-target="overlay"
+      data-action="click->menu#keepOpen keydown->menu#handleKeydown"
+    >
+      <!-- Menu Items -->
+      <div class="py-2">
         <% if authenticated? %>
-          <%= link_to I18n.t('layouts.header.find_project'), projects_home_path, class: "text-sm font-medium px-4 py-2 border border-lavender-200 text-lavender-700 rounded-lg hover:bg-lavender-50 hover:border-lavender-300 hover:shadow-sm transition-all duration-200" %>
-          <%= link_to I18n.t('layouts.header.your_projects'), user_projects_path(Current.user), class: "text-sm font-medium px-4 py-2 border border-mustard text-mustard-500 rounded-lg hover:bg-mustard-50 hover:border-mustard-500 hover:shadow-sm transition-all duration-200" %>
-          <%= button_to I18n.t('layouts.header.log_out'), session_path, method: :delete, class: "text-sm font-medium px-4 py-2 border border-charcoal-200 text-charcoal-600 rounded-lg hover:border-red-300 hover:text-red-600 hover:bg-red-50 transition-all duration-200" %>
+          <%= link_to projects_home_path, class: "flex items-center gap-3 px-4 py-3 text-lavender-700 hover:bg-lavender-50 transition-all duration-200", data: { action: "click->menu#close" } do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <span class="font-medium"><%= I18n.t('layouts.header.find_project') %></span>
+          <% end %>
+
+          <%= link_to user_projects_path(Current.user), class: "flex items-center gap-3 px-4 py-3 text-mustard-600 hover:bg-mustard-50 transition-all duration-200", data: { action: "click->menu#close" } do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+            </svg>
+            <span class="font-medium"><%= I18n.t('layouts.header.your_projects') %></span>
+          <% end %>
+
+          <div class="my-1 h-px bg-gradient-to-r from-transparent via-charcoal-100 to-transparent"></div>
+
+          <%= button_to session_path, method: :delete, class: "flex items-center gap-3 w-full px-4 py-3 text-charcoal-600 hover:bg-red-50 hover:text-red-600 transition-all duration-200", data: { action: "click->menu#close" } do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span class="font-medium"><%= I18n.t('layouts.header.log_out') %></span>
+          <% end %>
         <% else %>
-          <%= link_to I18n.t('layouts.header.sign_in'), new_session_path, class: "text-sm font-medium text-charcoal-500 hover:text-lavender-700 px-3 py-2 rounded-lg hover:bg-lavender-50 transition-all duration-200" %>
-          <%= link_to I18n.t('layouts.header.sign_up'), new_user_path, class: "text-sm font-medium px-4 py-2 bg-gradient-to-r from-lavender to-lavender-400 text-white rounded-lg hover:from-lavender-700 hover:to-lavender-400 hover:shadow-md transition-all duration-200" %>
+          <%= link_to new_session_path, class: "flex items-center gap-3 px-4 py-3 text-charcoal-600 hover:bg-lavender-50 hover:text-lavender-700 transition-all duration-200", data: { action: "click->menu#close" } do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+            <span class="font-medium"><%= I18n.t('layouts.header.sign_in') %></span>
+          <% end %>
+
+          <div class="my-1 h-px bg-gradient-to-r from-transparent via-charcoal-100 to-transparent"></div>
+
+          <%= link_to new_user_path, class: "flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-lavender to-lavender-400 text-white hover:from-lavender-700 hover:to-lavender-400 transition-all duration-200 mx-2 mb-2 rounded-lg", data: { action: "click->menu#close" } do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+            <span class="font-medium"><%= I18n.t('layouts.header.sign_up') %></span>
+          <% end %>
         <% end %>
       </div>
     </div>
